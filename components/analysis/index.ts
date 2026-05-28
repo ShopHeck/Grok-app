@@ -6,3 +6,4 @@ export { DetailScores } from "./detail-scores";
 export { FlagList } from "./flag-list";
 export { SuggestionList } from "./suggestion-list";
 export { RewriteBlock } from "./rewrite-block";
+export { ExportButton } from "./export-button";

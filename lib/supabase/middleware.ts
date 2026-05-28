@@ -30,7 +30,7 @@ export async function updateSession(request: NextRequest) {
     request.nextUrl.pathname.startsWith('/auth')
 
   const isDashboardRoute = request.nextUrl.pathname.startsWith('/dashboard') ||
-    request.nextUrl.pathname.startsWith('/scans') ||
+    request.nextUrl.pathname.startsWith('/analyses') ||
     request.nextUrl.pathname.startsWith('/settings')
 
   if (!user && isDashboardRoute) {

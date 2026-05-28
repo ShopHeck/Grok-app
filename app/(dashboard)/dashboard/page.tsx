@@ -20,6 +20,7 @@ import {
   Sparkles,
   ArrowRight,
 } from "lucide-react";
+import { ScoreTrendChart } from "@/components/dashboard/score-trend-chart";
 
 function statusVariant(
   status: string
@@ -97,6 +98,22 @@ export default async function DashboardPage() {
           scoreData.reduce((sum, s) => sum + (s.score || 0), 0) / scoreData.length
         )
       : null;
+
+  // Trend data: last 20 completed analyses with scores
+  const { data: trendData } = await supabase
+    .from("analyses")
+    .select("score, created_at, agent_id")
+    .eq("user_id", user.id)
+    .eq("status", "completed")
+    .not("score", "is", null)
+    .order("created_at", { ascending: true })
+    .limit(20);
+
+  const scoreTrend = (trendData || []).map((d) => ({
+    date: d.created_at,
+    score: d.score as number,
+    agentId: d.agent_id,
+  }));
 
   return (
     <div className="flex flex-col gap-6">
@@ -182,6 +199,21 @@ export default async function DashboardPage() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Score Trend Chart */}
+      {scoreTrend.length >= 2 && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-base">Score Trend</CardTitle>
+            <CardDescription>
+              Track how your scores improve over time
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ScoreTrendChart data={scoreTrend} />
+          </CardContent>
+        </Card>
+      )}
 
       {/* Recent Analyses */}
       <Card>

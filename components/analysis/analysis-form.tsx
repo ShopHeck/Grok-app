@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { AgentConfig } from "@/lib/agents/types";
 import { AgentSelector } from "./agent-selector";
@@ -16,6 +16,8 @@ interface AnalysisFormProps {
   remainingQuota: number;
 }
 
+type StreamStatus = "idle" | "connecting" | "streaming" | "parsing" | "done";
+
 export function AnalysisForm({ userPlan, remainingQuota }: AnalysisFormProps) {
   const router = useRouter();
   const [step, setStep] = useState<"select" | "input">("select");
@@ -24,7 +26,8 @@ export function AnalysisForm({ userPlan, remainingQuota }: AnalysisFormProps) {
   const [inputText, setInputText] = useState("");
   const [customInstructions, setCustomInstructions] = useState("");
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [streamStatus, setStreamStatus] = useState<StreamStatus>("idle");
+  const [streamedContent, setStreamedContent] = useState("");
 
   function handleAgentSelect(agent: AgentConfig) {
     setSelectedAgent(agent);
@@ -35,41 +38,102 @@ export function AnalysisForm({ userPlan, remainingQuota }: AnalysisFormProps) {
   function handleBack() {
     setStep("select");
     setError(null);
+    setStreamStatus("idle");
+    setStreamedContent("");
   }
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    if (!selectedAgent) return;
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
+      if (!selectedAgent) return;
 
-    setLoading(true);
-    setError(null);
+      setStreamStatus("connecting");
+      setStreamedContent("");
+      setError(null);
 
-    try {
-      const res = await fetch("/api/analyses", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          title: title || `${selectedAgent.name} - ${new Date().toLocaleDateString()}`,
-          inputText,
-          agentId: selectedAgent.id,
-          ...(selectedAgent.id === "custom" && customInstructions
-            ? { customInstructions }
-            : {}),
-        }),
-      });
+      try {
+        const res = await fetch("/api/analyses/stream", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            title:
+              title ||
+              `${selectedAgent.name} - ${new Date().toLocaleDateString()}`,
+            inputText,
+            agentId: selectedAgent.id,
+            ...(selectedAgent.id === "custom" && customInstructions
+              ? { customInstructions }
+              : {}),
+          }),
+        });
 
-      const data = await res.json();
+        if (!res.ok) {
+          const data = await res.json();
+          throw new Error(
+            data.message || data.error || "Failed to start analysis"
+          );
+        }
 
-      if (!res.ok) {
-        throw new Error(data.message || data.error || "Failed to create analysis");
+        const reader = res.body?.getReader();
+        if (!reader) throw new Error("No response stream");
+
+        const decoder = new TextDecoder();
+        let buffer = "";
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          buffer += decoder.decode(value, { stream: true });
+
+          // Process complete SSE messages
+          const lines = buffer.split("\n\n");
+          buffer = lines.pop() || "";
+
+          for (const line of lines) {
+            if (!line.startsWith("data: ")) continue;
+            const jsonStr = line.slice(6);
+
+            try {
+              const event = JSON.parse(jsonStr);
+
+              switch (event.type) {
+                case "started":
+                  setStreamStatus("streaming");
+                  break;
+
+                case "chunk":
+                  setStreamedContent((prev) => prev + event.content);
+                  break;
+
+                case "complete":
+                  setStreamStatus("done");
+                  // Navigate to result page
+                  router.push(`/analyses/${event.id}`);
+                  return;
+
+                case "error":
+                  throw new Error(event.message);
+              }
+            } catch (parseErr) {
+              if (
+                parseErr instanceof Error &&
+                parseErr.message !== "Unexpected end of JSON input"
+              ) {
+                throw parseErr;
+              }
+            }
+          }
+        }
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "An error occurred");
+        setStreamStatus("idle");
       }
+    },
+    [selectedAgent, title, inputText, customInstructions, router]
+  );
 
-      router.push(`/analyses/${data.id}`);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "An error occurred");
-      setLoading(false);
-    }
-  }
+  const isLoading = streamStatus !== "idle";
 
   // Step 1: Agent selection
   if (step === "select") {
@@ -100,7 +164,13 @@ export function AnalysisForm({ userPlan, remainingQuota }: AnalysisFormProps) {
     <div className="flex flex-col gap-6">
       {/* Header with back button */}
       <div className="flex items-center gap-4">
-        <Button variant="ghost" size="sm" onClick={handleBack} type="button">
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={handleBack}
+          type="button"
+          disabled={isLoading}
+        >
           <ArrowLeft className="h-4 w-4 mr-1" />
           Back
         </Button>
@@ -122,8 +192,48 @@ export function AnalysisForm({ userPlan, remainingQuota }: AnalysisFormProps) {
         </div>
       )}
 
+      {/* Streaming progress */}
+      {isLoading && (
+        <Card className="border-primary/30 bg-primary/5">
+          <CardContent className="pt-6">
+            <div className="flex items-center gap-3 mb-3">
+              <Loader2 className="h-5 w-5 animate-spin text-primary" />
+              <span className="font-medium text-sm">
+                {streamStatus === "connecting" && "Connecting to AI..."}
+                {streamStatus === "streaming" && "Analyzing your content..."}
+                {streamStatus === "parsing" && "Finalizing results..."}
+                {streamStatus === "done" && "Complete! Redirecting..."}
+              </span>
+            </div>
+            {streamedContent && (
+              <div className="bg-background/80 rounded-md p-3 max-h-32 overflow-y-auto">
+                <pre className="text-xs text-muted-foreground whitespace-pre-wrap font-mono">
+                  {streamedContent.slice(-500)}
+                </pre>
+              </div>
+            )}
+            <div className="mt-3 h-1.5 rounded-full bg-muted overflow-hidden">
+              <div
+                className="h-full rounded-full bg-primary transition-all duration-300 ease-out"
+                style={{
+                  width:
+                    streamStatus === "connecting"
+                      ? "10%"
+                      : streamStatus === "streaming"
+                        ? `${Math.min(90, 20 + streamedContent.length / 50)}%`
+                        : "100%",
+                }}
+              />
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Form */}
-      <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+      <form
+        onSubmit={handleSubmit}
+        className={`flex flex-col gap-5 ${isLoading ? "opacity-50 pointer-events-none" : ""}`}
+      >
         <Card>
           <CardContent className="pt-6 flex flex-col gap-5">
             {/* Title */}
@@ -182,15 +292,15 @@ export function AnalysisForm({ userPlan, remainingQuota }: AnalysisFormProps) {
         {/* Submit */}
         <div className="flex items-center justify-between">
           <p className="text-xs text-muted-foreground">
-            Analysis typically takes 5-15 seconds
+            Results stream in real-time as the AI analyzes
           </p>
           <Button
             type="submit"
-            disabled={loading || !inputText.trim()}
+            disabled={isLoading || !inputText.trim()}
             size="lg"
             className="gap-2"
           >
-            {loading ? (
+            {isLoading ? (
               <>
                 <Loader2 className="h-4 w-4 animate-spin" />
                 Analyzing...

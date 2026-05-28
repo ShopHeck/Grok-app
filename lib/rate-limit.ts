@@ -1,36 +1,59 @@
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
+
 /**
- * Simple in-memory rate limiter for development/single-instance deployments.
+ * Production rate limiter using Upstash Redis.
+ * Works correctly across Vercel serverless function invocations.
  *
- * For production with multiple instances (e.g., Vercel serverless), replace with:
- * - @upstash/ratelimit (recommended)
- * - Redis-based solution
+ * Requires env vars:
+ * - UPSTASH_REDIS_REST_URL
+ * - UPSTASH_REDIS_REST_TOKEN
  *
- * This implementation uses a sliding window approach.
+ * Falls back to a permissive no-op if Upstash is not configured (dev mode).
  */
 
-interface RateLimitEntry {
-  count: number;
-  resetAt: number;
-}
+let redis: Redis | null = null;
 
-const store = new Map<string, RateLimitEntry>();
+function getRedis(): Redis | null {
+  if (redis) return redis;
 
-// Clean up expired entries periodically
-setInterval(() => {
-  const now = Date.now();
-  for (const [key, entry] of store.entries()) {
-    if (entry.resetAt < now) {
-      store.delete(key);
-    }
+  const url = process.env.UPSTASH_REDIS_REST_URL;
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN;
+
+  if (!url || !token) {
+    console.warn(
+      "[rate-limit] UPSTASH_REDIS_REST_URL or UPSTASH_REDIS_REST_TOKEN not set. Rate limiting disabled."
+    );
+    return null;
   }
-}, 60_000); // Clean every 60s
 
-export interface RateLimitConfig {
-  /** Max requests allowed in the window */
-  maxRequests: number;
-  /** Window duration in seconds */
-  windowSeconds: number;
+  redis = new Redis({ url, token });
+  return redis;
 }
+
+// Analysis creation: 5 per minute per user
+const analysisLimiter = new Ratelimit({
+  redis: Redis.fromEnv(),
+  limiter: Ratelimit.slidingWindow(5, "60 s"),
+  analytics: true,
+  prefix: "ratelimit:analysis",
+});
+
+// General API: 60 per minute per user
+const apiLimiter = new Ratelimit({
+  redis: Redis.fromEnv(),
+  limiter: Ratelimit.slidingWindow(60, "60 s"),
+  analytics: true,
+  prefix: "ratelimit:api",
+});
+
+// Auth attempts: 10 per minute per IP
+const authLimiter = new Ratelimit({
+  redis: Redis.fromEnv(),
+  limiter: Ratelimit.slidingWindow(10, "60 s"),
+  analytics: true,
+  prefix: "ratelimit:auth",
+});
 
 export interface RateLimitResult {
   success: boolean;
@@ -38,49 +61,41 @@ export interface RateLimitResult {
   resetAt: number;
 }
 
+type LimiterType = "analysis" | "api" | "auth";
+
+const limiters: Record<LimiterType, Ratelimit> = {
+  analysis: analysisLimiter,
+  api: apiLimiter,
+  auth: authLimiter,
+};
+
 /**
- * Check rate limit for a given identifier (e.g., user ID or IP).
+ * Check rate limit for a given identifier.
+ * Returns a permissive result if Upstash is not configured.
  */
-export function checkRateLimit(
+export async function checkRateLimit(
   identifier: string,
-  config: RateLimitConfig
-): RateLimitResult {
-  const now = Date.now();
-  const windowMs = config.windowSeconds * 1000;
-  const key = `${identifier}`;
+  type: LimiterType = "analysis"
+): Promise<RateLimitResult> {
+  const redisClient = getRedis();
 
-  const entry = store.get(key);
-
-  // No existing entry or window expired — allow
-  if (!entry || entry.resetAt < now) {
-    store.set(key, { count: 1, resetAt: now + windowMs });
-    return {
-      success: true,
-      remaining: config.maxRequests - 1,
-      resetAt: now + windowMs,
-    };
+  // Permissive fallback for development without Upstash
+  if (!redisClient) {
+    return { success: true, remaining: 999, resetAt: Date.now() + 60000 };
   }
 
-  // Within window — check count
-  if (entry.count >= config.maxRequests) {
-    return {
-      success: false,
-      remaining: 0,
-      resetAt: entry.resetAt,
-    };
-  }
+  const limiter = limiters[type];
+  const result = await limiter.limit(identifier);
 
-  // Increment
-  entry.count++;
   return {
-    success: true,
-    remaining: config.maxRequests - entry.count,
-    resetAt: entry.resetAt,
+    success: result.success,
+    remaining: result.remaining,
+    resetAt: result.reset,
   };
 }
 
 /**
- * Pre-configured rate limits for different endpoints.
+ * Pre-configured rate limit configs (kept for reference/documentation).
  */
 export const RATE_LIMITS = {
   /** Analysis creation: 5 per minute per user */
