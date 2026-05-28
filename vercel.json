@@ -1,0 +1,29 @@
+{
+  "framework": "nextjs",
+  "regions": ["iad1"],
+  "functions": {
+    "app/api/analyses/route.ts": {
+      "maxDuration": 60
+    },
+    "app/api/stripe/webhook/route.ts": {
+      "maxDuration": 30
+    }
+  },
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "X-XSS-Protection", "value": "1; mode=block" }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" }
+      ]
+    }
+  ]
+}

@@ -10,6 +10,7 @@ import { FlagList } from "./flag-list";
 import { SuggestionList } from "./suggestion-list";
 import { RewriteBlock } from "./rewrite-block";
 import { Clock, Zap } from "lucide-react";
+import { ExportButton } from "./export-button";
 
 interface AnalysisResultProps {
   result: AnalysisResultType;
@@ -17,6 +18,7 @@ interface AnalysisResultProps {
   title: string;
   createdAt: string;
   tokensUsed?: number;
+  inputText?: string;
 }
 
 export function AnalysisResult({
@@ -25,6 +27,7 @@ export function AnalysisResult({
   title,
   createdAt,
   tokensUsed,
+  inputText,
 }: AnalysisResultProps) {
   const criticalFlags = result.flags?.filter((f) => f.severity === "critical") || [];
   const warningFlags = result.flags?.filter((f) => f.severity === "warning") || [];
@@ -60,6 +63,13 @@ export function AnalysisResult({
             </div>
           </div>
         </div>
+        <ExportButton
+          result={result}
+          agent={agent}
+          title={title}
+          createdAt={createdAt}
+          inputText={inputText}
+        />
       </div>
 
       {/* Score Overview */}

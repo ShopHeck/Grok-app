@@ -3,7 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { runAnalysis } from "@/lib/grok";
 import { canAccessAgent, getAgent, validAgentIds } from "@/lib/agents";
 import { PLAN_LIMITS } from "@/lib/agents/types";
-import { checkRateLimit, RATE_LIMITS } from "@/lib/rate-limit";
+import { checkRateLimit } from "@/lib/rate-limit";
 import { z } from "zod";
 
 const CreateAnalysisSchema = z.object({
@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
   }
 
   // Rate limit check
-  const rateLimit = checkRateLimit(user.id, RATE_LIMITS.analysis);
+  const rateLimit = await checkRateLimit(user.id, "analysis");
   if (!rateLimit.success) {
     return NextResponse.json(
       {

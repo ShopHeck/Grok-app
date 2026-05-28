@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { AnalysisResult } from "@/components/analysis/analysis-result";
+import { ShareButton } from "@/components/analysis/share-button";
 import { agentMap } from "@/lib/agents";
 import { ArrowLeft } from "lucide-react";
 import type { AnalysisResult as AnalysisResultType } from "@/lib/agents/types";
@@ -35,13 +36,19 @@ export default async function AnalysisDetailPage({
   return (
     <div className="max-w-4xl mx-auto flex flex-col gap-6">
       {/* Back navigation */}
-      <div>
+      <div className="flex items-center justify-between">
         <Link href="/analyses">
           <Button variant="ghost" size="sm" className="gap-1">
             <ArrowLeft className="h-4 w-4" />
             Back to History
           </Button>
         </Link>
+        {analysis.status === "completed" && (
+          <ShareButton
+            analysisId={analysis.id}
+            initialShareId={analysis.share_id}
+          />
+        )}
       </div>
 
       {/* Completed - show full results */}
@@ -52,6 +59,7 @@ export default async function AnalysisDetailPage({
           title={analysis.title}
           createdAt={analysis.created_at}
           tokensUsed={analysis.tokens_used}
+          inputText={analysis.input_text}
         />
       )}
 
