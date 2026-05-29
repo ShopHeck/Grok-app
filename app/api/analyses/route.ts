@@ -13,6 +13,7 @@ const CreateAnalysisSchema = z.object({
     message: "Invalid agent ID",
   }),
   customInstructions: z.string().max(2000).optional(),
+  parentId: z.string().uuid().optional(),
 });
 
 export async function POST(request: NextRequest) {
@@ -62,7 +63,7 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const { title, inputText, agentId, customInstructions } = parsed.data;
+  const { title, inputText, agentId, customInstructions, parentId } = parsed.data;
 
   // Get user profile for plan check
   const { data: profile } = await supabase
@@ -139,6 +140,7 @@ export async function POST(request: NextRequest) {
       input_text: inputText,
       agent_id: agentId,
       status: "processing",
+      ...(parentId ? { parent_id: parentId } : {}),
     })
     .select()
     .single();

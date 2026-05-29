@@ -21,6 +21,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { ScoreTrendChart } from "@/components/dashboard/score-trend-chart";
+import { Onboarding } from "@/components/dashboard/onboarding";
 
 function statusVariant(
   status: string
@@ -117,6 +118,12 @@ export default async function DashboardPage() {
 
   return (
     <div className="flex flex-col gap-6">
+      {/* Onboarding for new users */}
+      <Onboarding
+        userName={undefined}
+        hasAnalyses={!!(analyses && analyses.length > 0)}
+      />
+
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>

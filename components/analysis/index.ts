@@ -7,3 +7,7 @@ export { FlagList } from "./flag-list";
 export { SuggestionList } from "./suggestion-list";
 export { RewriteBlock } from "./rewrite-block";
 export { ExportButton } from "./export-button";
+export { ShareButton } from "./share-button";
+export { ReanalyzeButton } from "./reanalyze-button";
+export { CompareView } from "./compare-view";
+export { DeleteAnalysisButton } from "./delete-button";

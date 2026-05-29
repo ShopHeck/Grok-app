@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { PLAN_LIMITS } from "@/lib/agents/types";
 import { CreditCard, User, BarChart3, CheckCircle } from "lucide-react";
+import { ReferralCard } from "@/components/dashboard/referral-card";
 
 export default async function SettingsPage() {
   const supabase = await createClient();
@@ -174,6 +175,9 @@ export default async function SettingsPage() {
           )}
         </CardContent>
       </Card>
+
+      {/* Referral Program */}
+      <ReferralCard />
     </div>
   );
 }

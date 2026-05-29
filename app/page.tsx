@@ -13,6 +13,7 @@ import {
   Users,
   Lock,
 } from "lucide-react";
+import { PricingToggle } from "@/components/pricing-toggle";
 
 export default function HomePage() {
   return (
@@ -224,97 +225,7 @@ export default function HomePage() {
                 Start free. Upgrade when you need more.
               </p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-              {/* Free */}
-              <div className="p-6 bg-card rounded-xl border border-border flex flex-col gap-4">
-                <div>
-                  <h3 className="text-xl font-semibold">Free</h3>
-                  <div className="text-3xl font-bold mt-2">
-                    $0
-                    <span className="text-base font-normal text-muted-foreground">
-                      /mo
-                    </span>
-                  </div>
-                  <p className="text-sm text-muted-foreground mt-1">
-                    Perfect for trying it out
-                  </p>
-                </div>
-                <ul className="flex flex-col gap-2 text-sm flex-1">
-                  {PLAN_LIMITS.free.features.map((f) => (
-                    <li key={f} className="flex items-center gap-2">
-                      <Check className="h-4 w-4 text-primary shrink-0" /> {f}
-                    </li>
-                  ))}
-                </ul>
-                <Link href="/sign-up">
-                  <Button variant="outline" className="w-full">
-                    Get Started
-                  </Button>
-                </Link>
-              </div>
-
-              {/* Pro */}
-              <div className="p-6 bg-primary text-primary-foreground rounded-xl flex flex-col gap-4 relative shadow-xl scale-[1.02]">
-                <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-background text-foreground">
-                  Most Popular
-                </Badge>
-                <div>
-                  <h3 className="text-xl font-semibold">Pro</h3>
-                  <div className="text-3xl font-bold mt-2">
-                    $19
-                    <span className="text-base font-normal opacity-70">
-                      /mo
-                    </span>
-                  </div>
-                  <p className="text-sm opacity-80 mt-1">
-                    For professionals & freelancers
-                  </p>
-                </div>
-                <ul className="flex flex-col gap-2 text-sm flex-1">
-                  {PLAN_LIMITS.pro.features.map((f) => (
-                    <li key={f} className="flex items-center gap-2">
-                      <Check className="h-4 w-4 shrink-0" /> {f}
-                    </li>
-                  ))}
-                </ul>
-                <Link href="/sign-up">
-                  <Button variant="secondary" className="w-full">
-                    Start Free Trial
-                  </Button>
-                </Link>
-              </div>
-
-              {/* Team */}
-              <div className="p-6 bg-card rounded-xl border border-border flex flex-col gap-4">
-                <div>
-                  <div className="flex items-center gap-2">
-                    <h3 className="text-xl font-semibold">Team</h3>
-                    <Users className="h-4 w-4 text-muted-foreground" />
-                  </div>
-                  <div className="text-3xl font-bold mt-2">
-                    $49
-                    <span className="text-base font-normal text-muted-foreground">
-                      /mo
-                    </span>
-                  </div>
-                  <p className="text-sm text-muted-foreground mt-1">
-                    For teams & agencies
-                  </p>
-                </div>
-                <ul className="flex flex-col gap-2 text-sm flex-1">
-                  {PLAN_LIMITS.team.features.map((f) => (
-                    <li key={f} className="flex items-center gap-2">
-                      <Check className="h-4 w-4 text-primary shrink-0" /> {f}
-                    </li>
-                  ))}
-                </ul>
-                <Link href="/sign-up">
-                  <Button variant="outline" className="w-full">
-                    Contact Us
-                  </Button>
-                </Link>
-              </div>
-            </div>
+            <PricingToggle />
           </div>
         </section>
 

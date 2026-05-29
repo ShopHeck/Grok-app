@@ -6,16 +6,22 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { AnalysisResult } from "@/components/analysis/analysis-result";
 import { ShareButton } from "@/components/analysis/share-button";
+import { ReanalyzeButton } from "@/components/analysis/reanalyze-button";
+import { CompareView } from "@/components/analysis/compare-view";
+import { DeleteAnalysisButton } from "@/components/analysis/delete-button";
 import { agentMap } from "@/lib/agents";
 import { ArrowLeft } from "lucide-react";
 import type { AnalysisResult as AnalysisResultType } from "@/lib/agents/types";
 
 export default async function AnalysisDetailPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ compare?: string }>;
 }) {
   const { id } = await params;
+  const { compare: compareId } = await searchParams;
   const supabase = await createClient();
   const {
     data: { user },
@@ -33,9 +39,23 @@ export default async function AnalysisDetailPage({
 
   const agent = agentMap[analysis.agent_id];
 
+  // Load comparison data if compare param or parent_id exists
+  let compareAnalysis = null;
+  const compareTarget = compareId || analysis.parent_id;
+  if (compareTarget && analysis.status === "completed") {
+    const { data } = await supabase
+      .from("analyses")
+      .select("id, title, result, created_at, status")
+      .eq("id", compareTarget)
+      .eq("user_id", user.id)
+      .eq("status", "completed")
+      .single();
+    compareAnalysis = data;
+  }
+
   return (
     <div className="max-w-4xl mx-auto flex flex-col gap-6">
-      {/* Back navigation */}
+      {/* Back navigation + actions */}
       <div className="flex items-center justify-between">
         <Link href="/analyses">
           <Button variant="ghost" size="sm" className="gap-1">
@@ -44,12 +64,39 @@ export default async function AnalysisDetailPage({
           </Button>
         </Link>
         {analysis.status === "completed" && (
-          <ShareButton
-            analysisId={analysis.id}
-            initialShareId={analysis.share_id}
-          />
+          <div className="flex items-center gap-2">
+            <ReanalyzeButton
+              analysisId={analysis.id}
+              agentId={analysis.agent_id}
+              inputText={analysis.input_text}
+              title={analysis.title}
+            />
+            <ShareButton
+              analysisId={analysis.id}
+              initialShareId={analysis.share_id}
+            />
+            <DeleteAnalysisButton analysisId={analysis.id} />
+          </div>
         )}
       </div>
+
+      {/* Compare View (if comparing) */}
+      {compareAnalysis && analysis.status === "completed" && analysis.result && (
+        <CompareView
+          previous={{
+            id: compareAnalysis.id,
+            title: compareAnalysis.title,
+            result: compareAnalysis.result as AnalysisResultType,
+            createdAt: compareAnalysis.created_at,
+          }}
+          current={{
+            id: analysis.id,
+            title: analysis.title,
+            result: analysis.result as AnalysisResultType,
+            createdAt: analysis.created_at,
+          }}
+        />
+      )}
 
       {/* Completed - show full results */}
       {analysis.status === "completed" && analysis.result && agent && (
@@ -63,7 +110,7 @@ export default async function AnalysisDetailPage({
         />
       )}
 
-      {/* Completed but no agent config (shouldn't happen but handle gracefully) */}
+      {/* Completed but no agent config */}
       {analysis.status === "completed" && analysis.result && !agent && (
         <Card>
           <CardHeader>
