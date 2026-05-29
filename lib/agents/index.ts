@@ -3,6 +3,10 @@ import { coldEmailGrader } from "./cold-email-grader";
 import { listingOptimizer } from "./listing-optimizer";
 import { contractReviewer } from "./contract-reviewer";
 import { jobPostAnalyzer } from "./job-post-analyzer";
+import { socialPostOptimizer } from "./social-post-optimizer";
+import { resumeReviewer } from "./resume-reviewer";
+import { adCopyGrader } from "./ad-copy-grader";
+import { landingPageReviewer } from "./landing-page-reviewer";
 import { customAgent } from "./custom-agent";
 
 export * from "./types";
@@ -10,7 +14,11 @@ export * from "./types";
 // All available agents
 export const agents: AgentConfig[] = [
   coldEmailGrader,
+  socialPostOptimizer,
   listingOptimizer,
+  resumeReviewer,
+  adCopyGrader,
+  landingPageReviewer,
   contractReviewer,
   jobPostAnalyzer,
   customAgent,
