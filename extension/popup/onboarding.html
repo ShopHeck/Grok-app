@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to AgentDesk</title>
+  <link rel="stylesheet" href="../styles/popup.css">
+  <style>
+    body { width: 380px; }
+    .onboarding { padding: 24px 20px; text-align: center; }
+    .onboarding-logo { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 20px; }
+    .onboarding-logo svg { color: #6366f1; }
+    .onboarding-logo span { font-size: 18px; font-weight: 700; color: #6366f1; }
+    .onboarding h1 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+    .onboarding p { font-size: 13px; color: #6b7280; margin-bottom: 20px; line-height: 1.5; }
+    .steps { text-align: left; margin-bottom: 24px; }
+    .step { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid #f3f4f6; }
+    .step:last-child { border-bottom: none; }
+    .step-num { width: 24px; height: 24px; border-radius: 50%; background: #eef2ff; color: #6366f1; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .step-content h3 { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+    .step-content p { font-size: 11px; color: #9ca3af; margin: 0; }
+    .permissions { background: #f9fafb; border-radius: 8px; padding: 12px; margin-bottom: 20px; text-align: left; }
+    .permissions h4 { font-size: 11px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 8px; }
+    .permissions li { font-size: 11px; color: #6b7280; padding: 3px 0; display: flex; align-items: center; gap: 6px; }
+    .permissions li::before { content: '✓'; color: #10b981; font-weight: 700; }
+  </style>
+</head>
+<body>
+  <div class="onboarding">
+    <div class="onboarding-logo">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+      </svg>
+      <span>AgentDesk</span>
+    </div>
+
+    <h1>Welcome! You're all set.</h1>
+    <p>Score your writing with AI — right from Gmail, LinkedIn, and Google Docs.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>Sign in to AgentDesk</h3>
+          <p>Click the extension icon → Sign In (or create a free account)</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>Right-click any text</h3>
+          <p>Select text anywhere → right-click → "Analyze with AgentDesk"</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>Get instant scores</h3>
+          <p>See your score badge, suggestions, and one-click AI rewrites</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="permissions">
+      <h4>What this extension can access</h4>
+      <ul style="list-style: none; padding: 0; margin: 0;">
+        <li>Gmail compose — to add "Score Email" button</li>
+        <li>LinkedIn posts — to add "Score Post" button</li>
+        <li>Google Docs — for right-click analysis</li>
+        <li>Only text you explicitly select or submit</li>
+      </ul>
+    </div>
+
+    <button id="get-started-btn" class="btn btn-primary btn-full">Open AgentDesk</button>
+    <p style="font-size: 11px; color: #9ca3af; margin-top: 12px;">
+      3 free analyses per week • No credit card required
+    </p>
+  </div>
+
+  <script>
+    // Mark onboarding as shown
+    chrome.storage.local.set({ onboardingShown: true });
+
+    document.getElementById("get-started-btn").addEventListener("click", () => {
+      chrome.tabs.create({ url: "https://agentdesk.app/sign-up?source=extension-install" });
+      window.close();
+    });
+  </script>
+</body>
+</html>

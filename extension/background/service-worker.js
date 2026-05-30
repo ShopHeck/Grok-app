@@ -7,7 +7,16 @@ const API_BASE = "https://agentdesk.app";
 
 // ============ CONTEXT MENUS ============
 
-chrome.runtime.onInstalled.addListener(() => {
+chrome.runtime.onInstalled.addListener((details) => {
+  // Show onboarding on first install
+  if (details.reason === "install") {
+    chrome.storage.local.get(["onboardingShown"], (data) => {
+      if (!data.onboardingShown) {
+        chrome.tabs.create({ url: chrome.runtime.getURL("popup/onboarding.html") });
+      }
+    });
+  }
+
   chrome.contextMenus.create({
     id: "agentdesk-analyze",
     title: "Analyze with AgentDesk",
