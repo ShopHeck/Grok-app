@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "build:extension": "node scripts/build-extension.js"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.4",

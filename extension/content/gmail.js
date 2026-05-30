@@ -74,18 +74,21 @@
       </button>
     `;
 
-    btn.addEventListener("click", () => {
+    btn.addEventListener("click", async () => {
       const text = composeEl.innerText?.trim();
       if (text) {
-        chrome.runtime.sendMessage({
-          type: "ANALYZE",
-          payload: { text, agentId: AGENT_ID, title: "Gmail Draft" },
-        }).then((response) => {
+        showAnalyzing();
+        try {
+          const response = await chrome.runtime.sendMessage({
+            type: "ANALYZE",
+            payload: { text, agentId: AGENT_ID, title: "Gmail Draft" },
+          });
           if (response?.success && response.result) {
             showResult(response.result, AGENT_ID);
           }
-        });
-        showAnalyzing();
+        } catch (err) {
+          showError(err.message || "Failed to analyze text");
+        }
       }
     });
 

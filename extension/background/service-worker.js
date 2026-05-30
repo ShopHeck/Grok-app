@@ -3,7 +3,9 @@
  * Handles: context menus, API communication, auth state, alarms
  */
 
-const API_BASE = "https://agentdesk.app";
+importScripts("../config.js");
+
+const API_BASE = "https://grok-app-eta.vercel.app";
 
 // ============ CONTEXT MENUS ============
 
@@ -112,16 +114,26 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === "ANALYZE") {
-    handleAnalyze(message.payload)
-      .then((result) => sendResponse({ success: true, result }))
-      .catch((error) => sendResponse({ success: false, error: error.message }));
+    (async () => {
+      try {
+        const result = await handleAnalyze(message.payload);
+        sendResponse({ success: true, result });
+      } catch (error) {
+        sendResponse({ success: false, error: error.message });
+      }
+    })();
     return true; // Keep channel open for async
   }
 
   if (message.type === "SYNC_DATA") {
-    syncUserData()
-      .then(() => sendResponse({ success: true }))
-      .catch(() => sendResponse({ success: false }));
+    (async () => {
+      try {
+        await syncUserData();
+        sendResponse({ success: true });
+      } catch {
+        sendResponse({ success: false });
+      }
+    })();
     return true;
   }
 

@@ -40,8 +40,8 @@ const ENV_CONFIGS = {
     ENV: "staging",
   },
   production: {
-    API_BASE: "https://agentdesk.app",
-    APP_URL: "https://agentdesk.app",
+    API_BASE: "https://grok-app-eta.vercel.app",
+    APP_URL: "https://grok-app-eta.vercel.app",
     ENV: "production",
   },
 };
@@ -119,13 +119,49 @@ const AGENTDESK_CONFIG = {
   }
   console.log("   ✓ Replaced API_BASE in JS files");
 
-  // Step 5: Update manifest version
+  // Step 5: Update manifest version and add development host configurations
   const manifestPath = path.join(DIST_DIR, "manifest.json");
   const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf-8"));
   manifest.version = version;
 
-  // Add config.js to background scripts via importScripts workaround
-  // (MV3 service workers can't use import, but we reference the global)
+  if (env === "development") {
+    // Add localhost support to host_permissions
+    if (!manifest.host_permissions) manifest.host_permissions = [];
+    if (!manifest.host_permissions.includes("http://localhost:3000/*")) {
+      manifest.host_permissions.push("http://localhost:3000/*");
+    }
+    if (!manifest.host_permissions.includes("http://127.0.0.1:3000/*")) {
+      manifest.host_permissions.push("http://127.0.0.1:3000/*");
+    }
+
+    // Add localhost support to content_scripts matches
+    if (manifest.content_scripts) {
+      for (const script of manifest.content_scripts) {
+        if (script.matches.includes("https://agentdesk.app/*")) {
+          if (!script.matches.includes("http://localhost:3000/*")) {
+            script.matches.push("http://localhost:3000/*");
+          }
+          if (!script.matches.includes("http://127.0.0.1:3000/*")) {
+            script.matches.push("http://127.0.0.1:3000/*");
+          }
+        }
+      }
+    }
+
+    // Add localhost support to web_accessible_resources matches
+    if (manifest.web_accessible_resources) {
+      for (const res of manifest.web_accessible_resources) {
+        if (res.matches && res.matches.includes("https://agentdesk.app/*")) {
+          if (!res.matches.includes("http://localhost:3000/*")) {
+            res.matches.push("http://localhost:3000/*");
+          }
+          if (!res.matches.includes("http://127.0.0.1:3000/*")) {
+            res.matches.push("http://127.0.0.1:3000/*");
+          }
+        }
+      }
+    }
+  }
 
   fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2));
   console.log("   ✓ Updated manifest version");
@@ -136,6 +172,8 @@ const AGENTDESK_CONFIG = {
     "background/service-worker.js",
     "popup/popup.html",
     "popup/popup.js",
+    "popup/onboarding.html",
+    "popup/onboarding.js",
     "content/gmail.js",
     "content/linkedin.js",
     "content/google-docs.js",

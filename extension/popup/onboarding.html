@@ -77,14 +77,7 @@
     </p>
   </div>
 
-  <script>
-    // Mark onboarding as shown
-    chrome.storage.local.set({ onboardingShown: true });
-
-    document.getElementById("get-started-btn").addEventListener("click", () => {
-      chrome.tabs.create({ url: "https://agentdesk.app/sign-up?source=extension-install" });
-      window.close();
-    });
-  </script>
+  <script src="../config.js"></script>
+  <script src="onboarding.js"></script>
 </body>
 </html>

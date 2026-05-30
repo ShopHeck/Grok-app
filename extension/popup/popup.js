@@ -3,7 +3,7 @@
  * Handles login state, quick analysis, and recent results display
  */
 
-const API_BASE = "https://agentdesk.app"; // Updated in production
+const API_BASE = "https://grok-app-eta.vercel.app"; // Updated in production
 
 // DOM Elements
 const states = {

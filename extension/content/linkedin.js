@@ -77,18 +77,21 @@
     `;
     btn.textContent = "⚡ Score Post";
 
-    btn.addEventListener("click", () => {
+    btn.addEventListener("click", async () => {
       const text = editorEl.innerText?.trim();
       if (text) {
-        chrome.runtime.sendMessage({
-          type: "ANALYZE",
-          payload: { text, agentId: AGENT_ID, title: "LinkedIn Post" },
-        }).then((response) => {
+        showAnalyzing();
+        try {
+          const response = await chrome.runtime.sendMessage({
+            type: "ANALYZE",
+            payload: { text, agentId: AGENT_ID, title: "LinkedIn Post" },
+          });
           if (response?.success && response.result) {
             showResult(response.result);
           }
-        });
-        showAnalyzing();
+        } catch (err) {
+          showError(err.message || "Failed to analyze text");
+        }
       }
     });
 
