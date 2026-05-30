@@ -18,12 +18,30 @@ const CreateAnalysisSchema = z.object({
 export const maxDuration = 60;
 
 export async function POST(request: NextRequest) {
-  const supabase = await createClient();
   const authHeader = request.headers.get("Authorization");
   const token = authHeader?.startsWith("Bearer ") ? authHeader.substring(7) : undefined;
+
+  let supabase;
+  if (token) {
+    const { createClient: createSupabaseClient } = await import("@supabase/supabase-js");
+    supabase = createSupabaseClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+        global: {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      }
+    );
+  } else {
+    supabase = await createClient();
+  }
+
   const {
     data: { user },
-  } = await supabase.auth.getUser(token);
+  } = await supabase.auth.getUser();
 
   if (!user) {
     return new Response(JSON.stringify({ error: "Unauthorized" }), {
