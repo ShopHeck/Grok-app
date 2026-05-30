@@ -1,0 +1,59 @@
+{
+  "manifest_version": 3,
+  "name": "AgentDesk - AI Writing Analyzer",
+  "version": "1.0.0",
+  "description": "Score your writing instantly with AI. Right-click any text to analyze cold emails, LinkedIn posts, ad copy, and more.",
+  "permissions": [
+    "activeTab",
+    "contextMenus",
+    "storage",
+    "alarms"
+  ],
+  "host_permissions": [
+    "https://mail.google.com/*",
+    "https://www.linkedin.com/*",
+    "https://docs.google.com/*"
+  ],
+  "background": {
+    "service_worker": "background/service-worker.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "assets/icon-16.png",
+      "32": "assets/icon-32.png",
+      "48": "assets/icon-48.png",
+      "128": "assets/icon-128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://mail.google.com/*"],
+      "js": ["content/gmail.js"],
+      "css": ["styles/content.css"]
+    },
+    {
+      "matches": ["https://www.linkedin.com/*"],
+      "js": ["content/linkedin.js"],
+      "css": ["styles/content.css"]
+    },
+    {
+      "matches": ["https://docs.google.com/*"],
+      "js": ["content/google-docs.js"],
+      "css": ["styles/content.css"]
+    }
+  ],
+  "icons": {
+    "16": "assets/icon-16.png",
+    "32": "assets/icon-32.png",
+    "48": "assets/icon-48.png",
+    "128": "assets/icon-128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/*", "styles/*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

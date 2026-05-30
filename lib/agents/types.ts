@@ -59,10 +59,10 @@ export interface PlanLimits {
 export const PLAN_LIMITS: Record<string, PlanLimits> = {
   free: {
     maxAnalysesPerMonth: 10,
-    maxAgents: ["cold-email-grader", "listing-optimizer", "custom"],
+    maxAgents: ["cold-email-grader", "listing-optimizer", "newsletter-grader", "support-response-grader", "custom"],
     maxInputLength: 5000,
     historyRetentionDays: 7,
-    features: ["3 agents", "10 analyses/month", "7-day history"],
+    features: ["5 agents", "10 analyses/month", "7-day history", "Chrome extension (3/week)", "Writing streaks"],
   },
   pro: {
     maxAnalysesPerMonth: -1, // unlimited
@@ -70,9 +70,11 @@ export const PLAN_LIMITS: Record<string, PlanLimits> = {
     maxInputLength: 50000,
     historyRetentionDays: -1, // unlimited
     features: [
-      "All agents",
+      "All 15 agents",
       "Unlimited analyses",
       "Full history",
+      "Unlimited Chrome extension",
+      "Score badges & sharing",
       "Priority processing",
       "Export results",
     ],
@@ -88,6 +90,7 @@ export const PLAN_LIMITS: Record<string, PlanLimits> = {
       "Shared history",
       "Custom agents",
       "API access",
+      "Weekly digest reports",
     ],
   },
 };
