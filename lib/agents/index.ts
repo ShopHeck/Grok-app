@@ -7,6 +7,12 @@ import { socialPostOptimizer } from "./social-post-optimizer";
 import { resumeReviewer } from "./resume-reviewer";
 import { adCopyGrader } from "./ad-copy-grader";
 import { landingPageReviewer } from "./landing-page-reviewer";
+import { pitchDeckReviewer } from "./pitch-deck-reviewer";
+import { newsletterGrader } from "./newsletter-grader";
+import { privacyPolicyReviewer } from "./privacy-policy-reviewer";
+import { supportResponseGrader } from "./support-response-grader";
+import { proposalAnalyzer } from "./proposal-analyzer";
+import { technicalDocsReviewer } from "./technical-docs-reviewer";
 import { customAgent } from "./custom-agent";
 
 export * from "./types";
@@ -17,10 +23,16 @@ export const agents: AgentConfig[] = [
   socialPostOptimizer,
   listingOptimizer,
   resumeReviewer,
+  newsletterGrader,
+  supportResponseGrader,
   adCopyGrader,
   landingPageReviewer,
   contractReviewer,
   jobPostAnalyzer,
+  pitchDeckReviewer,
+  privacyPolicyReviewer,
+  proposalAnalyzer,
+  technicalDocsReviewer,
   customAgent,
 ];
 
