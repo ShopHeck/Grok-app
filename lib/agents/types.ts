@@ -62,7 +62,7 @@ export const PLAN_LIMITS: Record<string, PlanLimits> = {
     maxAgents: ["cold-email-grader", "listing-optimizer", "newsletter-grader", "support-response-grader", "custom"],
     maxInputLength: 5000,
     historyRetentionDays: 7,
-    features: ["5 agents", "10 analyses/month", "7-day history", "Chrome extension (3/week)", "Writing streaks"],
+    features: ["5 agents", "10 analyses/month", "7-day history", "Chrome extension (3/week)", "Writing streaks", "Community templates", "Before/After comparison"],
   },
   pro: {
     maxAnalysesPerMonth: -1, // unlimited
@@ -75,6 +75,8 @@ export const PLAN_LIMITS: Record<string, PlanLimits> = {
       "Full history",
       "Unlimited Chrome extension",
       "Score badges & sharing",
+      "Template marketplace",
+      "Playbook workflows",
       "Priority processing",
       "Export results",
     ],
@@ -86,10 +88,11 @@ export const PLAN_LIMITS: Record<string, PlanLimits> = {
     historyRetentionDays: -1,
     features: [
       "Everything in Pro",
-      "Team workspace",
-      "Shared history",
+      "Team workspace & analytics",
+      "Slack integration",
+      "Webhook API (1,000/mo)",
+      "Shared history & style guide",
       "Custom agents",
-      "API access",
       "Weekly digest reports",
     ],
   },

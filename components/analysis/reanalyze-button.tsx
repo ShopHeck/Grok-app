@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { RefreshCcw, Loader2 } from "lucide-react";
+import { RefreshCw, Loader2 } from "lucide-react";
 
 interface ReanalyzeButtonProps {
   analysisId: string;
@@ -12,6 +12,11 @@ interface ReanalyzeButtonProps {
   title: string;
 }
 
+/**
+ * "Iterate" button that re-runs analysis on edited text.
+ * Creates a new analysis linked as a version to the original.
+ * Enables iteration mode → before/after comparison.
+ */
 export function ReanalyzeButton({
   analysisId,
   agentId,
@@ -23,25 +28,15 @@ export function ReanalyzeButton({
 
   async function handleReanalyze() {
     setLoading(true);
-    try {
-      const res = await fetch("/api/analyses", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          title: `${title} (v2)`,
-          inputText,
-          agentId,
-          parentId: analysisId,
-        }),
-      });
+    // Navigate to analysis form pre-filled with current text
+    // The "parent_id" query param enables iteration tracking
+    const params = new URLSearchParams({
+      agent: agentId,
+      iterate: analysisId,
+      title: `${title} (v2)`,
+    });
 
-      const data = await res.json();
-      if (res.ok && data.id) {
-        router.push(`/analyses/${data.id}?compare=${analysisId}`);
-      }
-    } finally {
-      setLoading(false);
-    }
+    router.push(`/analyses/new?${params.toString()}`);
   }
 
   return (
@@ -50,14 +45,14 @@ export function ReanalyzeButton({
       size="sm"
       onClick={handleReanalyze}
       disabled={loading}
-      className="gap-2"
+      className="gap-1.5"
     >
       {loading ? (
         <Loader2 className="h-3.5 w-3.5 animate-spin" />
       ) : (
-        <RefreshCcw className="h-3.5 w-3.5" />
+        <RefreshCw className="h-3.5 w-3.5" />
       )}
-      Re-analyze
+      Iterate & Re-score
     </Button>
   );
 }
