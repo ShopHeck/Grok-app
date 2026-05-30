@@ -20,6 +20,10 @@ import {
   GitCompareArrows,
   BookOpen,
   Webhook,
+  Brain,
+  Store,
+  Code2,
+  Trophy,
 } from "lucide-react";
 import { PricingToggle } from "@/components/pricing-toggle";
 
@@ -458,8 +462,157 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* Phase 3: Platform & Moat */}
+        <section className="py-20 px-4">
+          <div className="container mx-auto max-w-5xl">
+            <div className="text-center mb-12">
+              <Badge className="mb-4" variant="secondary">
+                <Brain className="h-3 w-3 mr-1" />
+                AI That Learns You
+              </Badge>
+              <h2 className="text-3xl font-bold mb-3">
+                Platform-Level Intelligence
+              </h2>
+              <p className="text-muted-foreground max-w-xl mx-auto">
+                Your AI gets smarter the more you use it. Personal voice tuning,
+                community agents, developer API, and industry benchmarks.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* Writing DNA */}
+              <div className="flex flex-col gap-4 p-6 bg-card rounded-xl border border-border">
+                <div className="flex items-center gap-3">
+                  <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-violet-100 to-purple-100 flex items-center justify-center">
+                    <Brain className="h-5 w-5 text-violet-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">Writing DNA</h3>
+                    <Badge variant="outline" className="text-[10px] mt-0.5">Pro</Badge>
+                  </div>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  After 15+ analyses, we build your unique writing profile.
+                  Rewrites match YOUR voice. Scoring adapts to your industry.
+                  The more you use it, the more personal it gets.
+                </p>
+                <ul className="flex flex-col gap-1.5">
+                  <li className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <Check className="h-3 w-3 text-primary shrink-0" />
+                    Voice profile: tone, vocabulary, formality, sentence style
+                  </li>
+                  <li className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <Check className="h-3 w-3 text-primary shrink-0" />
+                    Industry calibration (SaaS, e-commerce, fintech, etc.)
+                  </li>
+                  <li className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <Check className="h-3 w-3 text-primary shrink-0" />
+                    &ldquo;Write like me&rdquo; rewrites that match your natural voice
+                  </li>
+                </ul>
+              </div>
+
+              {/* Agent Marketplace */}
+              <div className="flex flex-col gap-4 p-6 bg-card rounded-xl border border-border">
+                <div className="flex items-center gap-3">
+                  <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center">
+                    <Store className="h-5 w-5 text-amber-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">Agent Marketplace</h3>
+                    <Badge variant="outline" className="text-[10px] mt-0.5">All Plans</Badge>
+                  </div>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  Install community-built agents for any niche. Create and
+                  publish your own — earn 30% revenue share on every install.
+                  Agencies can white-label agents for clients.
+                </p>
+                <ul className="flex flex-col gap-1.5">
+                  <li className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <Check className="h-3 w-3 text-primary shrink-0" />
+                    YC App Reviewer, Amazon FBA Optimizer, Upwork Proposal Scorer...
+                  </li>
+                  <li className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <Check className="h-3 w-3 text-primary shrink-0" />
+                    Creator revenue share (earn from your agents)
+                  </li>
+                  <li className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <Check className="h-3 w-3 text-primary shrink-0" />
+                    Featured Agent of the Week + ratings
+                  </li>
+                </ul>
+              </div>
+
+              {/* Public API */}
+              <div className="flex flex-col gap-4 p-6 bg-card rounded-xl border border-border">
+                <div className="flex items-center gap-3">
+                  <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-sky-100 to-blue-100 flex items-center justify-center">
+                    <Code2 className="h-5 w-5 text-sky-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">Developer API</h3>
+                    <Badge variant="outline" className="text-[10px] mt-0.5">Team</Badge>
+                  </div>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  Build on top of AgentDesk. Score content in your CRM, grade
+                  templates before sending, or add AI analysis to any product.
+                  RESTful API with SDKs for Node.js and Python.
+                </p>
+                <ul className="flex flex-col gap-1.5">
+                  <li className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <Check className="h-3 w-3 text-primary shrink-0" />
+                    POST /api/v1/analyze — one endpoint, any agent
+                  </li>
+                  <li className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <Check className="h-3 w-3 text-primary shrink-0" />
+                    $0.05/analysis or 1,000/mo included in Team plan
+                  </li>
+                  <li className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <Check className="h-3 w-3 text-primary shrink-0" />
+                    Self-documenting: GET returns full schema
+                  </li>
+                </ul>
+              </div>
+
+              {/* Benchmarks */}
+              <div className="flex flex-col gap-4 p-6 bg-card rounded-xl border border-border">
+                <div className="flex items-center gap-3">
+                  <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-emerald-100 to-teal-100 flex items-center justify-center">
+                    <Trophy className="h-5 w-5 text-emerald-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">Industry Benchmarks</h3>
+                    <Badge variant="outline" className="text-[10px] mt-0.5">All Plans</Badge>
+                  </div>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  See where you rank against all users. Get percentile scores,
+                  join weekly challenges, and receive trend alerts on what&apos;s
+                  working across the platform.
+                </p>
+                <ul className="flex flex-col gap-1.5">
+                  <li className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <Check className="h-3 w-3 text-primary shrink-0" />
+                    &ldquo;Your emails score in the top 15%&rdquo; positioning
+                  </li>
+                  <li className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <Check className="h-3 w-3 text-primary shrink-0" />
+                    Weekly challenges: &ldquo;Score above 80 on Ad Copy&rdquo;
+                  </li>
+                  <li className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <Check className="h-3 w-3 text-primary shrink-0" />
+                    Trend insights: what&apos;s working this month
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Pricing */}
-        <section id="pricing" className="py-20 px-4">
+        <section id="pricing" className="py-20 px-4 bg-muted/50">
           <div className="container mx-auto max-w-5xl">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold mb-3">Simple, Fair Pricing</h2>
