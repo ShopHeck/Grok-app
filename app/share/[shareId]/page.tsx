@@ -49,6 +49,20 @@ export async function generateMetadata({
       description:
         analysis.summary || `AI analysis result from AgentDesk`,
       type: "article",
+      images: [
+        {
+          url: `/api/badges/og?id=${shareId}`,
+          width: 1200,
+          height: 630,
+          alt: `AgentDesk Score: ${analysis.score}/100`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${agent?.icon || "🤖"} ${analysis.title} — Score: ${analysis.score}/100`,
+      description: analysis.summary || `AI analysis result from AgentDesk`,
+      images: [`/api/badges/og?id=${shareId}`],
     },
   };
 }

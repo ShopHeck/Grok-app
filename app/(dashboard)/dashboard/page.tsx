@@ -22,6 +22,9 @@ import {
 } from "lucide-react";
 import { ScoreTrendChart } from "@/components/dashboard/score-trend-chart";
 import { Onboarding } from "@/components/dashboard/onboarding";
+import { StreakCard } from "@/components/dashboard/streak-card";
+import { PersonalBests } from "@/components/dashboard/personal-bests";
+import { UpgradeNudge } from "@/components/dashboard/upgrade-nudge";
 
 function statusVariant(
   status: string
@@ -205,6 +208,20 @@ export default async function DashboardPage() {
             )}
           </CardContent>
         </Card>
+      </div>
+
+      {/* Upgrade Nudge (free users only) */}
+      <UpgradeNudge
+        plan={plan}
+        analysesUsed={totalThisMonth}
+        analysesLimit={limits.maxAnalysesPerMonth}
+        avgScore={avgScore}
+      />
+
+      {/* Streak + Personal Bests Row */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <StreakCard />
+        <PersonalBests />
       </div>
 
       {/* Score Trend Chart */}

@@ -12,6 +12,10 @@ import {
   Sparkles,
   Users,
   Lock,
+  Chrome,
+  Flame,
+  Share2,
+  TrendingUp,
 } from "lucide-react";
 import { PricingToggle } from "@/components/pricing-toggle";
 
@@ -49,7 +53,7 @@ export default function HomePage() {
           <div className="container mx-auto text-center max-w-4xl relative">
             <Badge className="mb-4" variant="secondary">
               <Sparkles className="h-3 w-3 mr-1" />
-              Powered by Grok AI
+              Now with Chrome Extension
             </Badge>
             <h1 className="text-5xl sm:text-6xl font-bold tracking-tight mb-6 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text">
               Specialized AI Agents
@@ -57,9 +61,9 @@ export default function HomePage() {
               for Every Business Task
             </h1>
             <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
-              One platform, multiple AI experts. Grade cold emails, optimize
-              product listings, review contracts, and analyze job posts — all
-              with structured scores and actionable rewrites.
+              One platform, 15 AI experts. Grade cold emails, optimize
+              newsletters, review contracts, score pitch decks — right from your
+              browser. Get structured scores and actionable rewrites instantly.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/sign-up">
@@ -74,7 +78,7 @@ export default function HomePage() {
               </Link>
             </div>
             <p className="text-sm text-muted-foreground mt-4">
-              No credit card required &middot; 10 free analyses per month
+              No credit card required &middot; 10 free analyses per month &middot; Chrome extension included
             </p>
           </div>
         </section>
@@ -140,8 +144,69 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* How It Works */}
+        {/* Chrome Extension */}
         <section className="py-20 px-4">
+          <div className="container mx-auto max-w-5xl">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+              <div>
+                <Badge className="mb-4" variant="outline">
+                  <Chrome className="h-3 w-3 mr-1" />
+                  Chrome Extension
+                </Badge>
+                <h2 className="text-3xl font-bold mb-4">
+                  Score your writing without leaving the page
+                </h2>
+                <p className="text-muted-foreground mb-6 leading-relaxed">
+                  Right-click any text in Gmail, LinkedIn, or Google Docs to get
+                  an instant AI score. No copy-pasting, no tab switching.
+                </p>
+                <ul className="flex flex-col gap-3 mb-6">
+                  <li className="flex items-center gap-2 text-sm">
+                    <Check className="h-4 w-4 text-primary shrink-0" />
+                    Auto-detects Gmail compose → Cold Email Grader
+                  </li>
+                  <li className="flex items-center gap-2 text-sm">
+                    <Check className="h-4 w-4 text-primary shrink-0" />
+                    Auto-detects LinkedIn post → Social Post Optimizer
+                  </li>
+                  <li className="flex items-center gap-2 text-sm">
+                    <Check className="h-4 w-4 text-primary shrink-0" />
+                    Floating score badge with one-click rewrite
+                  </li>
+                  <li className="flex items-center gap-2 text-sm">
+                    <Check className="h-4 w-4 text-primary shrink-0" />
+                    3 free extension analyses per week
+                  </li>
+                </ul>
+                <Button size="lg" className="gap-2">
+                  <Chrome className="h-4 w-4" /> Add to Chrome — Free
+                </Button>
+              </div>
+              <div className="bg-muted/50 rounded-xl border border-border p-8 flex flex-col gap-4">
+                <div className="flex items-center gap-3 p-4 bg-card rounded-lg border shadow-sm">
+                  <div className="h-10 w-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 font-bold">87</div>
+                  <div className="flex-1">
+                    <p className="text-sm font-medium">Great personalization!</p>
+                    <p className="text-xs text-muted-foreground">Cold Email Grader • 3 suggestions</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 p-4 bg-card rounded-lg border shadow-sm">
+                  <div className="h-10 w-10 rounded-full bg-amber-100 flex items-center justify-center text-amber-700 font-bold">62</div>
+                  <div className="flex-1">
+                    <p className="text-sm font-medium">Hook needs work — too generic</p>
+                    <p className="text-xs text-muted-foreground">Social Post Optimizer • 5 suggestions</p>
+                  </div>
+                </div>
+                <p className="text-center text-xs text-muted-foreground mt-2">
+                  Results appear as a floating badge on any page
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* How It Works */}
+        <section className="py-20 px-4 bg-muted/50">
           <div className="container mx-auto max-w-4xl">
             <h2 className="text-3xl font-bold text-center mb-12">
               How It Works
@@ -153,8 +218,8 @@ export default function HomePage() {
                 </div>
                 <h3 className="font-semibold text-lg">Pick an Agent</h3>
                 <p className="text-sm text-muted-foreground">
-                  Choose the AI agent that matches your task — email, listing,
-                  contract, or job post.
+                  Choose from 15 specialized AI agents — or right-click in your
+                  browser for auto-detection.
                 </p>
               </div>
               <div className="text-center flex flex-col items-center gap-3">
@@ -163,8 +228,8 @@ export default function HomePage() {
                 </div>
                 <h3 className="font-semibold text-lg">Paste Your Content</h3>
                 <p className="text-sm text-muted-foreground">
-                  Drop in your draft email, product listing, contract, or job
-                  description.
+                  Drop in your draft email, newsletter, contract, proposal, or
+                  any business writing.
                 </p>
               </div>
               <div className="text-center flex flex-col items-center gap-3">
@@ -182,7 +247,7 @@ export default function HomePage() {
         </section>
 
         {/* Features */}
-        <section className="py-20 px-4 bg-muted/50">
+        <section className="py-20 px-4">
           <div className="container mx-auto max-w-5xl">
             <h2 className="text-3xl font-bold text-center mb-12">
               Built for Professionals
@@ -197,11 +262,35 @@ export default function HomePage() {
                 </p>
               </div>
               <div className="flex flex-col gap-3 p-6 bg-card rounded-lg border border-border">
+                <Flame className="h-8 w-8 text-orange-500" />
+                <h3 className="text-lg font-semibold">Writing Streaks</h3>
+                <p className="text-sm text-muted-foreground">
+                  Build consistency with daily streaks. Hit milestones to earn
+                  bonus analyses and unlock Pro agents for free.
+                </p>
+              </div>
+              <div className="flex flex-col gap-3 p-6 bg-card rounded-lg border border-border">
+                <Share2 className="h-8 w-8 text-primary" />
+                <h3 className="text-lg font-semibold">Share & Embed</h3>
+                <p className="text-sm text-muted-foreground">
+                  Share your scores on social media with beautiful OG cards.
+                  Embed score badges in your portfolio or email signature.
+                </p>
+              </div>
+              <div className="flex flex-col gap-3 p-6 bg-card rounded-lg border border-border">
                 <Shield className="h-8 w-8 text-primary" />
                 <h3 className="text-lg font-semibold">Private & Secure</h3>
                 <p className="text-sm text-muted-foreground">
                   Your data is protected with row-level security. Only you can
                   see your analyses. No training on your data.
+                </p>
+              </div>
+              <div className="flex flex-col gap-3 p-6 bg-card rounded-lg border border-border">
+                <TrendingUp className="h-8 w-8 text-emerald-500" />
+                <h3 className="text-lg font-semibold">Personal Bests</h3>
+                <p className="text-sm text-muted-foreground">
+                  Track your top score per agent. Get notified when you beat your
+                  personal record. Watch your improvement over time.
                 </p>
               </div>
               <div className="flex flex-col gap-3 p-6 bg-card rounded-lg border border-border">
@@ -236,14 +325,20 @@ export default function HomePage() {
               Ready to level up your business writing?
             </h2>
             <p className="text-muted-foreground mb-8">
-              Join professionals who use AgentDesk to write better emails, listings,
-              job posts, and contracts. Start for free today.
+              Join professionals who use AgentDesk to write better emails,
+              newsletters, proposals, and contracts. Start for free on web or install
+              the Chrome extension.
             </p>
-            <Link href="/sign-up">
-              <Button size="lg" className="gap-2 text-base px-8">
-                Get Started Free <ArrowRight className="h-4 w-4" />
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href="/sign-up">
+                <Button size="lg" className="gap-2 text-base px-8">
+                  Get Started Free <ArrowRight className="h-4 w-4" />
+                </Button>
+              </Link>
+              <Button size="lg" variant="outline" className="gap-2 text-base px-8">
+                <Chrome className="h-4 w-4" /> Chrome Extension
               </Button>
-            </Link>
+            </div>
           </div>
         </section>
       </main>
