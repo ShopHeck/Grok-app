@@ -12,11 +12,11 @@
   "host_permissions": [
     "https://mail.google.com/*",
     "https://www.linkedin.com/*",
-    "https://docs.google.com/*"
+    "https://docs.google.com/*",
+    "https://agentdesk.app/*"
   ],
   "background": {
-    "service_worker": "background/service-worker.js",
-    "type": "module"
+    "service_worker": "background/service-worker.js"
   },
   "action": {
     "default_popup": "popup/popup.html",
@@ -42,6 +42,11 @@
       "matches": ["https://docs.google.com/*"],
       "js": ["content/google-docs.js"],
       "css": ["styles/content.css"]
+    },
+    {
+      "matches": ["https://agentdesk.app/*"],
+      "js": ["content/auth-bridge.js"],
+      "run_at": "document_idle"
     }
   ],
   "icons": {
@@ -53,7 +58,12 @@
   "web_accessible_resources": [
     {
       "resources": ["assets/*", "styles/*"],
-      "matches": ["<all_urls>"]
+      "matches": [
+        "https://mail.google.com/*",
+        "https://www.linkedin.com/*",
+        "https://docs.google.com/*",
+        "https://agentdesk.app/*"
+      ]
     }
   ]
 }

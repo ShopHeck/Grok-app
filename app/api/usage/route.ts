@@ -1,8 +1,8 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { PLAN_LIMITS } from "@/lib/agents/types";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   const supabase = await createClient();
   const {
     data: { user },
@@ -47,6 +47,18 @@ export async function GET() {
     0
   );
 
+  // Extension weekly quota (server-side enforcement)
+  const weekStart = getWeekStart();
+  const { data: extensionUsage } = await supabase
+    .from("analyses")
+    .select("id", { count: "exact", head: true })
+    .eq("user_id", user.id)
+    .eq("source", "extension")
+    .gte("created_at", weekStart);
+
+  const extensionWeeklyCount = extensionUsage?.length ?? 0;
+  const extensionWeeklyLimit = plan === "free" ? 3 : -1; // -1 = unlimited
+
   return NextResponse.json({
     plan,
     limits,
@@ -60,5 +72,21 @@ export async function GET() {
       limits.maxAnalysesPerMonth > 0
         ? Math.max(0, limits.maxAnalysesPerMonth - totalAnalyses)
         : -1, // -1 = unlimited
+    extension: {
+      weeklyUsed: extensionWeeklyCount,
+      weeklyLimit: extensionWeeklyLimit,
+      weeklyRemaining: extensionWeeklyLimit > 0
+        ? Math.max(0, extensionWeeklyLimit - extensionWeeklyCount)
+        : -1,
+      weekStart,
+    },
   });
+}
+
+function getWeekStart(): string {
+  const now = new Date();
+  const day = now.getDay();
+  const diff = now.getDate() - day + (day === 0 ? -6 : 1); // Monday
+  const monday = new Date(now.getFullYear(), now.getMonth(), diff);
+  return monday.toISOString().split("T")[0];
 }
