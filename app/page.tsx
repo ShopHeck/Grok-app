@@ -16,6 +16,10 @@ import {
   Flame,
   Share2,
   TrendingUp,
+  MessageSquare,
+  GitCompareArrows,
+  BookOpen,
+  Webhook,
 } from "lucide-react";
 import { PricingToggle } from "@/components/pricing-toggle";
 
@@ -300,6 +304,155 @@ export default function HomePage() {
                   Every agent provides a complete rewrite — not just criticism,
                   but a better version you can use immediately.
                 </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Phase 2: Team & Workflow Features */}
+        <section className="py-20 px-4 bg-muted/50">
+          <div className="container mx-auto max-w-5xl">
+            <div className="text-center mb-12">
+              <Badge className="mb-4" variant="secondary">
+                <Users className="h-3 w-3 mr-1" />
+                For Teams & Power Users
+              </Badge>
+              <h2 className="text-3xl font-bold mb-3">
+                From Tool to Workflow
+              </h2>
+              <p className="text-muted-foreground max-w-xl mx-auto">
+                Collaborate with your team, connect your tools, share templates,
+                and track improvement over time.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* Team Workspaces */}
+              <div className="flex flex-col gap-4 p-6 bg-card rounded-xl border border-border">
+                <div className="flex items-center gap-3">
+                  <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                    <Users className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">Team Workspaces</h3>
+                    <Badge variant="outline" className="text-[10px] mt-0.5">Team Plan</Badge>
+                  </div>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  Shared analysis history, team analytics dashboard, style guide
+                  enforcement, and approval workflows. See your team&apos;s avg
+                  score improve month over month.
+                </p>
+                <ul className="flex flex-col gap-1.5">
+                  <li className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <Check className="h-3 w-3 text-primary shrink-0" />
+                    Member leaderboard & team analytics
+                  </li>
+                  <li className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <Check className="h-3 w-3 text-primary shrink-0" />
+                    Brand voice & style guide enforcement
+                  </li>
+                  <li className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <Check className="h-3 w-3 text-primary shrink-0" />
+                    Role-based access (Owner, Admin, Member, Viewer)
+                  </li>
+                </ul>
+              </div>
+
+              {/* Integrations */}
+              <div className="flex flex-col gap-4 p-6 bg-card rounded-xl border border-border">
+                <div className="flex items-center gap-3">
+                  <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                    <Webhook className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">Slack & API Integrations</h3>
+                    <Badge variant="outline" className="text-[10px] mt-0.5">Team Plan</Badge>
+                  </div>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  Score text directly in Slack with <code className="text-xs bg-muted px-1 rounded">/agentdesk</code>.
+                  Connect Zapier, Make, or your own tools with our REST API
+                  and webhook callbacks.
+                </p>
+                <ul className="flex flex-col gap-1.5">
+                  <li className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <Check className="h-3 w-3 text-primary shrink-0" />
+                    Slack slash command with 14 agent aliases
+                  </li>
+                  <li className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <Check className="h-3 w-3 text-primary shrink-0" />
+                    REST API with Bearer auth & callback URLs
+                  </li>
+                  <li className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <Check className="h-3 w-3 text-primary shrink-0" />
+                    1,000 API calls/month included in Team plan
+                  </li>
+                </ul>
+              </div>
+
+              {/* Templates */}
+              <div className="flex flex-col gap-4 p-6 bg-card rounded-xl border border-border">
+                <div className="flex items-center gap-3">
+                  <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                    <BookOpen className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">Templates & Playbooks</h3>
+                    <Badge variant="outline" className="text-[10px] mt-0.5">All Plans</Badge>
+                  </div>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  Start from high-scoring community templates. Fork, customize,
+                  and publish your own. Run multi-step playbooks that chain
+                  agents into complete workflows.
+                </p>
+                <ul className="flex flex-col gap-1.5">
+                  <li className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <Check className="h-3 w-3 text-primary shrink-0" />
+                    Community marketplace with ratings & categories
+                  </li>
+                  <li className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <Check className="h-3 w-3 text-primary shrink-0" />
+                    One-click fork to customize any template
+                  </li>
+                  <li className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <Check className="h-3 w-3 text-primary shrink-0" />
+                    Multi-step playbooks (e.g., Launch Sequence)
+                  </li>
+                </ul>
+              </div>
+
+              {/* Before/After */}
+              <div className="flex flex-col gap-4 p-6 bg-card rounded-xl border border-border">
+                <div className="flex items-center gap-3">
+                  <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                    <GitCompareArrows className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">Before/After Comparison</h3>
+                    <Badge variant="outline" className="text-[10px] mt-0.5">All Plans</Badge>
+                  </div>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  Iterate on your writing with one-click re-analysis. See
+                  side-by-side diffs with change highlighting, score delta,
+                  and shareable improvement cards.
+                </p>
+                <ul className="flex flex-col gap-1.5">
+                  <li className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <Check className="h-3 w-3 text-primary shrink-0" />
+                    Word-level diff highlighting
+                  </li>
+                  <li className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <Check className="h-3 w-3 text-primary shrink-0" />
+                    Version history with score progression
+                  </li>
+                  <li className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <Check className="h-3 w-3 text-primary shrink-0" />
+                    Shareable &ldquo;Score: 34 → 91&rdquo; cards for social
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
