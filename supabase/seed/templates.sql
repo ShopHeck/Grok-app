@@ -7,7 +7,7 @@
 -- Replace after deploying with actual admin user UUID
 DO $$
 DECLARE
-  v_author_id uuid := '00000000-0000-0000-0000-000000000001';
+  v_author_id uuid := 'c2525bdf-f204-4fc5-88eb-9f287d3279ed';
 BEGIN
 
 -- ═══════════════════════════════════════════════════════

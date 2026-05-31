@@ -103,14 +103,10 @@
     const currentHash = hashSession(session);
 
     if (currentHash !== lastSessionHash) {
-      const wasLoggedIn = lastSessionHash !== "";
       lastSessionHash = currentHash;
 
       if (session) {
         sendSessionToExtension(session);
-      } else if (wasLoggedIn) {
-        // Session was removed → user logged out
-        sendLogoutToExtension();
       }
     }
   }
