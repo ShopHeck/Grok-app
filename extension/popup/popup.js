@@ -45,7 +45,12 @@ let currentResult = null;
 async function init() {
   showState("loading");
 
+  const storage = await chrome.storage.local.get(null);
+  console.log("[popup init] chrome.storage.local contents:", storage);
+
   const session = await getSession();
+  console.log("[popup init] getSession result:", session);
+
   if (session) {
     currentUser = session;
     showState("loggedIn");

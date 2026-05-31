@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import { ExtensionSync } from "@/components/extension-sync";
 
 export const metadata: Metadata = {
   title: {
@@ -81,7 +82,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="font-sans antialiased">{children}</body>
+      <body className="font-sans antialiased">
+        <ExtensionSync />
+        {children}
+      </body>
     </html>
   );
 }

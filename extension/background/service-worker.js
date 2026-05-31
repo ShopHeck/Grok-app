@@ -157,9 +157,12 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 
   if (message.type === "SET_SESSION") {
+    console.log("[SW onMessage] SET_SESSION payload received:", message.session, message.user);
     chrome.storage.local.set({
       session: message.session,
       user: message.user,
+    }, () => {
+      console.log("[SW onMessage] Session and user written to chrome.storage.local");
     });
     syncUserData();
     sendResponse({ success: true });
@@ -339,6 +342,7 @@ async function storeRecentAnalysis(event, agentId, analysisId) {
 async function syncUserData() {
   const data = await chrome.storage.local.get(["session"]);
   const token = data.session?.access_token;
+  console.log("[SW syncUserData] Token retrieved from storage:", token);
   if (!token) return;
 
   try {
@@ -346,8 +350,11 @@ async function syncUserData() {
       headers: { Authorization: `Bearer ${token}` },
     });
 
+    console.log("[SW syncUserData] API response status:", response.status);
+
     if (response.ok) {
       const usage = await response.json();
+      console.log("[SW syncUserData] Sync success, response body:", usage);
       await chrome.storage.local.set({
         plan: usage.plan || "free",
         usage: {
@@ -357,8 +364,8 @@ async function syncUserData() {
         },
       });
     }
-  } catch {
-    // Offline — use cached
+  } catch (err) {
+    console.error("[SW syncUserData] Sync failed with exception:", err);
   }
 }
 

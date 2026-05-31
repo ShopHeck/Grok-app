@@ -107,6 +107,8 @@
 
       if (session) {
         sendSessionToExtension(session);
+      } else {
+        sendLogoutToExtension();
       }
     }
   }
@@ -117,10 +119,17 @@
   // Periodic check (catches token refresh, login, logout)
   setInterval(checkSession, CHECK_INTERVAL);
 
-  // Also listen for storage events (login/logout in another tab)
+  // Listen for storage events (login/logout in another tab)
   window.addEventListener("storage", (e) => {
     if (e.key && e.key.includes("auth-token")) {
       setTimeout(checkSession, 500);
+    }
+  });
+
+  // Listen for session change messages sent from the page itself
+  window.addEventListener("message", (e) => {
+    if (e.data && e.data.type === "AGENTDESK_SESSION_CHANGED") {
+      checkSession();
     }
   });
 
