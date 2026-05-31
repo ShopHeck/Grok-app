@@ -38,7 +38,7 @@ export async function GET(request: NextRequest) {
 
   let query = supabase
     .from("templates")
-    .select("*, author:profiles(display_name, email)", { count: "exact" })
+    .select("*", { count: "exact" })
     .eq("is_public", true);
 
   if (agentId) query = query.eq("agent_id", agentId);
@@ -62,14 +62,17 @@ export async function GET(request: NextRequest) {
 
   query = query.range(offset, offset + limit - 1);
 
-  const { data: templates, count } = await query;
+  const { data: templates, count, error } = await query;
+
+  if (error) {
+    console.error("[templates] Query error:", error);
+    return NextResponse.json({ templates: [], pagination: { page, limit, total: 0, totalPages: 0 }, error: error.message });
+  }
 
   return NextResponse.json({
     templates: (templates || []).map((t) => ({
       ...t,
-      author_name: (t.author as Record<string, unknown>)?.display_name ||
-        (t.author as Record<string, unknown>)?.email || "Anonymous",
-      author: undefined,
+      author_name: t.is_official ? "AgentDesk" : "Community",
     })),
     pagination: {
       page,
