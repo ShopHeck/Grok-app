@@ -23,7 +23,7 @@ export async function GET(
 
   const { data: template } = await supabase
     .from("templates")
-    .select("*, author:profiles(display_name, email)")
+    .select("*")
     .eq("id", id)
     .single();
 
@@ -40,9 +40,7 @@ export async function GET(
   return NextResponse.json({
     template: {
       ...template,
-      author_name: (template.author as Record<string, unknown>)?.display_name ||
-        (template.author as Record<string, unknown>)?.email || "Anonymous",
-      author: undefined,
+      author_name: template.is_official ? "AgentDesk" : "Community",
     },
   });
 }
