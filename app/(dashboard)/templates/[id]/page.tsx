@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { createClient } from "@/lib/supabase/server";
+import { createClient as createServiceClient } from "@supabase/supabase-js";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -18,13 +18,21 @@ import {
 import { TemplateActions } from "@/components/templates/template-actions";
 import type { Metadata } from "next";
 
+// Use service role client to bypass RLS — templates are public but owned by admin
+function getServiceClient() {
+  return createServiceClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  );
+}
+
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ id: string }>;
 }): Promise<Metadata> {
   const { id } = await params;
-  const supabase = await createClient();
+  const supabase = getServiceClient();
   const { data: template } = await supabase
     .from("templates")
     .select("title, description, agent_id")
@@ -46,13 +54,17 @@ export default async function TemplateDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const supabase = await createClient();
+  const supabase = getServiceClient();
 
-  const { data: template } = await supabase
+  const { data: template, error } = await supabase
     .from("templates")
     .select("*")
     .eq("id", id)
     .single();
+
+  if (error) {
+    console.error("[templates/[id]] Query failed:", error.message);
+  }
 
   if (!template) notFound();
 
