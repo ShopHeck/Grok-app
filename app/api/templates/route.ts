@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { createClient as createServiceClient } from "@supabase/supabase-js";
 import { validAgentIds } from "@/lib/agents";
 import { z } from "zod";
 
@@ -19,7 +20,12 @@ const CreateTemplateSchema = z.object({
  */
 
 export async function GET(request: NextRequest) {
-  const supabase = await createClient();
+  // Use service role to bypass RLS on profiles join
+  // (users can't read other users' profiles, but we need author names for display)
+  const supabase = createServiceClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  );
   const { searchParams } = new URL(request.url);
 
   const agentId = searchParams.get("agentId");
