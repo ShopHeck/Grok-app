@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -159,51 +160,53 @@ function TemplateCard({ template }: { template: TemplateListItem }) {
   const agent = agentMap[template.agent_id];
 
   return (
-    <Card className="flex flex-col hover:shadow-md hover:border-primary/30 transition-all">
-      <CardHeader className="pb-2">
-        <div className="flex items-center justify-between mb-1">
-          <div className="flex items-center gap-2">
-            <span className="text-lg">{agent?.icon || "✨"}</span>
-            {template.is_official && (
-              <Badge variant="default" className="text-[9px] bg-primary">Official</Badge>
+    <Link href={`/templates/${template.id}`} className="block">
+      <Card className="flex flex-col hover:shadow-md hover:border-primary/30 transition-all h-full cursor-pointer">
+        <CardHeader className="pb-2">
+          <div className="flex items-center justify-between mb-1">
+            <div className="flex items-center gap-2">
+              <span className="text-lg">{agent?.icon || "✨"}</span>
+              {template.is_official && (
+                <Badge variant="default" className="text-[9px] bg-primary">Official</Badge>
+              )}
+            </div>
+            {template.score && (
+              <Badge variant="secondary" className="text-xs font-bold">
+                {template.score}/100
+              </Badge>
             )}
           </div>
-          {template.score && (
-            <Badge variant="secondary" className="text-xs font-bold">
-              {template.score}/100
-            </Badge>
-          )}
-        </div>
-        <CardTitle className="text-sm leading-tight line-clamp-2">
-          {template.title}
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="flex-1 flex flex-col gap-3">
-        <p className="text-xs text-muted-foreground line-clamp-2">
-          {template.description}
-        </p>
-        {/* Tags */}
-        <div className="flex flex-wrap gap-1">
-          {template.tags.slice(0, 3).map((tag) => (
-            <Badge key={tag} variant="outline" className="text-[10px]">{tag}</Badge>
-          ))}
-        </div>
-        {/* Stats */}
-        <div className="flex items-center gap-3 text-[11px] text-muted-foreground mt-auto pt-2 border-t">
-          <span className="flex items-center gap-1">
-            <Users className="h-3 w-3" /> {template.uses_count.toLocaleString()}
-          </span>
-          <span className="flex items-center gap-1">
-            <GitFork className="h-3 w-3" /> {template.forks_count}
-          </span>
-          {template.rating > 0 && (
+          <CardTitle className="text-sm leading-tight line-clamp-2">
+            {template.title}
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="flex-1 flex flex-col gap-3">
+          <p className="text-xs text-muted-foreground line-clamp-2">
+            {template.description}
+          </p>
+          {/* Tags */}
+          <div className="flex flex-wrap gap-1">
+            {template.tags.slice(0, 3).map((tag) => (
+              <Badge key={tag} variant="outline" className="text-[10px]">{tag}</Badge>
+            ))}
+          </div>
+          {/* Stats */}
+          <div className="flex items-center gap-3 text-[11px] text-muted-foreground mt-auto pt-2 border-t">
             <span className="flex items-center gap-1">
-              <Star className="h-3 w-3 fill-amber-400 text-amber-400" /> {template.rating}
+              <Users className="h-3 w-3" /> {template.uses_count.toLocaleString()}
             </span>
-          )}
-          <span className="ml-auto">by {template.author_name}</span>
-        </div>
-      </CardContent>
-    </Card>
+            <span className="flex items-center gap-1">
+              <GitFork className="h-3 w-3" /> {template.forks_count}
+            </span>
+            {template.rating > 0 && (
+              <span className="flex items-center gap-1">
+                <Star className="h-3 w-3 fill-amber-400 text-amber-400" /> {template.rating}
+              </span>
+            )}
+            <span className="ml-auto">by {template.author_name}</span>
+          </div>
+        </CardContent>
+      </Card>
+    </Link>
   );
 }
