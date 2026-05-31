@@ -89,24 +89,43 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
 
   const agentId = agentMap[info.menuItemId] || "cold-email-grader";
 
-  // Send analyzing indicator to content script
-  chrome.tabs.sendMessage(tab.id, {
+  // Helper to safely send tab messages and return if the tab has the content script active
+  const sendMessageToTab = async (msg) => {
+    try {
+      await chrome.tabs.sendMessage(tab.id, msg);
+      return true;
+    } catch {
+      return false;
+    }
+  };
+
+  const hasOverlay = await sendMessageToTab({
     type: "SHOW_ANALYZING",
     agentId,
   });
 
   try {
     const result = await runAnalysis(selectedText, agentId);
-    chrome.tabs.sendMessage(tab.id, {
-      type: "SHOW_RESULT",
-      result,
-      agentId,
-    });
+    
+    if (hasOverlay) {
+      await sendMessageToTab({
+        type: "SHOW_RESULT",
+        result,
+        agentId,
+      });
+    } else if (result?.id) {
+      // Fallback: If page doesn't support overlay scripts, open the full report page in a new tab
+      chrome.tabs.create({ url: `${API_BASE}/analyses/${result.id}` });
+    }
   } catch (error) {
-    chrome.tabs.sendMessage(tab.id, {
-      type: "SHOW_ERROR",
-      error: error.message,
-    });
+    if (hasOverlay) {
+      await sendMessageToTab({
+        type: "SHOW_ERROR",
+        error: error.message,
+      });
+    } else {
+      console.error("Analysis failed:", error.message);
+    }
   }
 });
 
