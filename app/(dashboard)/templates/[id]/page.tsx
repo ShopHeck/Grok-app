@@ -50,17 +50,14 @@ export default async function TemplateDetailPage({
 
   const { data: template } = await supabase
     .from("templates")
-    .select("*, author:profiles(display_name, email)")
+    .select("*")
     .eq("id", id)
     .single();
 
   if (!template) notFound();
 
   const agent = agentMap[template.agent_id];
-  const authorName =
-    (template.author as Record<string, unknown>)?.display_name ||
-    (template.author as Record<string, unknown>)?.email ||
-    "Anonymous";
+  const authorName = template.is_official ? "AgentDesk" : "Community";
 
   return (
     <div className="flex flex-col gap-6 max-w-4xl mx-auto">
