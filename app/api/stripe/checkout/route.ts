@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
-import { getStripe, STRIPE_PRICES, PaidPlan } from "@/lib/stripe";
+import { getStripe, PaidPlan } from "@/lib/stripe";
 
 export async function POST(request: NextRequest) {
   const supabase = await createClient();
@@ -9,9 +9,8 @@ export async function POST(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    return NextResponse.redirect(
-      new URL("/sign-in", process.env.NEXT_PUBLIC_APP_URL!)
-    );
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+    return NextResponse.redirect(new URL("/sign-in", appUrl));
   }
 
   // Determine which plan to checkout
@@ -24,17 +23,24 @@ export async function POST(request: NextRequest) {
     // Default to pro if no form data
   }
 
-  const priceId = STRIPE_PRICES[plan];
+  // Resolve price ID at runtime (not module load) to avoid undefined env vars
+  const priceId =
+    plan === "team"
+      ? process.env.STRIPE_TEAM_PRICE_ID
+      : process.env.STRIPE_PRO_PRICE_ID;
+
   if (!priceId) {
+    console.error(`[checkout] Missing STRIPE_${plan.toUpperCase()}_PRICE_ID env var`);
     return NextResponse.json(
-      { error: "Invalid plan configuration" },
+      { error: "Payment system not configured. Please contact support." },
       { status: 500 }
     );
   }
 
+  // Get profile — use user.email as fallback since email may not be in profiles table
   const { data: profile } = await supabase
     .from("profiles")
-    .select("stripe_customer_id, email")
+    .select("stripe_customer_id")
     .eq("id", user.id)
     .single();
 
@@ -44,7 +50,7 @@ export async function POST(request: NextRequest) {
   // Create Stripe customer if not exists
   if (!customerId) {
     const customer = await stripe.customers.create({
-      email: profile?.email ?? user.email,
+      email: user.email!, // Email from auth.users, always available
       metadata: { supabase_user_id: user.id },
     });
     customerId = customer.id;
@@ -55,13 +61,15 @@ export async function POST(request: NextRequest) {
       .eq("id", user.id);
   }
 
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+
   const session = await stripe.checkout.sessions.create({
     customer: customerId,
     mode: "subscription",
     payment_method_types: ["card"],
     line_items: [{ price: priceId, quantity: 1 }],
-    success_url: `${process.env.NEXT_PUBLIC_APP_URL}/settings?upgraded=true`,
-    cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/settings`,
+    success_url: `${appUrl}/settings?upgraded=true`,
+    cancel_url: `${appUrl}/settings`,
     subscription_data: {
       metadata: {
         supabase_user_id: user.id,
@@ -71,5 +79,13 @@ export async function POST(request: NextRequest) {
     allow_promotion_codes: true,
   });
 
-  return NextResponse.redirect(session.url!, { status: 303 });
+  if (!session.url) {
+    console.error("[checkout] Stripe session created without URL", session.id);
+    return NextResponse.json(
+      { error: "Failed to create checkout session" },
+      { status: 500 }
+    );
+  }
+
+  return NextResponse.redirect(session.url, { status: 303 });
 }

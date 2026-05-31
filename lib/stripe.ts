@@ -16,13 +16,22 @@ export function getStripe(): Stripe {
   return stripeClient;
 }
 
-// Price IDs for each plan (set in environment variables)
+// Price IDs for each plan — resolved lazily to avoid crashing at module load
+// when env vars aren't set yet (e.g., during build)
+export function getStripePrices() {
+  return {
+    pro: process.env.STRIPE_PRO_PRICE_ID || "",
+    team: process.env.STRIPE_TEAM_PRICE_ID || "",
+  };
+}
+
+// Keep static export for backward compatibility (used by resolveSubscriptionPlan)
 export const STRIPE_PRICES = {
-  pro: process.env.STRIPE_PRO_PRICE_ID!,
-  team: process.env.STRIPE_TEAM_PRICE_ID!,
+  get pro() { return process.env.STRIPE_PRO_PRICE_ID || ""; },
+  get team() { return process.env.STRIPE_TEAM_PRICE_ID || ""; },
 } as const;
 
-export type PaidPlan = keyof typeof STRIPE_PRICES;
+export type PaidPlan = "pro" | "team";
 
 // Map Stripe subscription status + price to our plan names
 export function resolveSubscriptionPlan(
@@ -33,7 +42,7 @@ export function resolveSubscriptionPlan(
 
   if (subscription.status === "active" || subscription.status === "trialing") {
     const priceId = subscription.items.data[0]?.price?.id;
-    if (priceId === STRIPE_PRICES.team) return "team";
+    if (priceId && priceId === process.env.STRIPE_TEAM_PRICE_ID) return "team";
     return "pro"; // default paid plan
   }
 
