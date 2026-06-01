@@ -40,8 +40,8 @@ const ENV_CONFIGS = {
     ENV: "staging",
   },
   production: {
-    API_BASE: "https://grok-app-eta.vercel.app",
-    APP_URL: "https://grok-app-eta.vercel.app",
+    API_BASE: "https://writescore.io",
+    APP_URL: "https://writescore.io",
     ENV: "production",
   },
 };

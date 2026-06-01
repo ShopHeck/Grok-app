@@ -33,7 +33,7 @@ Privacy and Permissions:
 AgentDesk takes privacy seriously. We only transmit the specific text you select for analysis to our secure grading API. We never track your browsing history or sell your data.
 
 Support and Feedback:
-Have questions or suggestions? Reach out to support@agentdesk.app or visit grok-app-eta.vercel.app/support.
+Have questions or suggestions? Reach out to support@agentdesk.app or visit writescore.io/support.
 
 **Category**
 Productivity
@@ -71,7 +71,7 @@ English
 | `https://mail.google.com/*` | host_permissions | Required to inject the content script that adds the helper button to the Gmail compose toolbar. |
 | `https://www.linkedin.com/*` | host_permissions | Required to inject the content script that adds the helper button to the LinkedIn sharing box. |
 | `https://docs.google.com/*` | host_permissions | Required to run content scripts that handle context-menu selections and draw result overlays on Google Docs. |
-| `https://grok-app-eta.vercel.app/*` | host_permissions | Required to authenticate the extension by reading the Supabase session token from the main web application page. |
+| `https://writescore.io/*` | host_permissions | Required to authenticate the extension by reading the Supabase session token from the main web application page. |
 
 ## Privacy & Data Use
 
@@ -93,7 +93,7 @@ English
 ## Privacy Policy
 
 **Privacy Policy URL**
-https://grok-app-eta.vercel.app/privacy
+https://writescore.io/privacy
 
 ## Distribution
 
@@ -113,7 +113,7 @@ developer@agentdesk.app
 support@agentdesk.app
 
 **Homepage URL**
-https://grok-app-eta.vercel.app
+https://writescore.io
 
 ## Version History
 

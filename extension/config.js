@@ -6,8 +6,8 @@
 
 // eslint-disable-next-line no-unused-vars
 const AGENTDESK_CONFIG = {
-  API_BASE: "https://grok-app-eta.vercel.app",
-  APP_URL: "https://grok-app-eta.vercel.app",
+  API_BASE: "https://writescore.io",
+  APP_URL: "https://writescore.io",
   EXTENSION_ID: "", // Filled after Chrome Web Store upload
   VERSION: "1.0.0",
   ENV: "production", // development | staging | production

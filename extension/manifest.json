@@ -13,7 +13,7 @@
     "https://mail.google.com/*",
     "https://www.linkedin.com/*",
     "https://docs.google.com/*",
-    "https://grok-app-eta.vercel.app/*"
+    "https://writescore.io/*"
   ],
   "background": {
     "service_worker": "background/service-worker.js"
@@ -44,7 +44,7 @@
       "css": ["styles/content.css"]
     },
     {
-      "matches": ["https://grok-app-eta.vercel.app/*"],
+      "matches": ["https://writescore.io/*"],
       "js": ["content/auth-bridge.js"],
       "run_at": "document_idle"
     }
@@ -62,7 +62,7 @@
         "https://mail.google.com/*",
         "https://www.linkedin.com/*",
         "https://docs.google.com/*",
-        "https://grok-app-eta.vercel.app/*"
+        "https://writescore.io/*"
       ]
     }
   ]

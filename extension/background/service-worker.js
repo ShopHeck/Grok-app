@@ -5,7 +5,7 @@
 
 importScripts("../config.js");
 
-const API_BASE = "https://grok-app-eta.vercel.app";
+const API_BASE = "https://writescore.io";
 
 // ============ CONTEXT MENUS ============
 
