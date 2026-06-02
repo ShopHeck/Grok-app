@@ -4,9 +4,9 @@ import { Zap, ArrowLeft } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Chrome Extension Privacy Policy — AgentDesk",
+  title: "Chrome Extension Privacy Policy — WriteScore",
   description:
-    "Privacy policy for the AgentDesk Chrome Extension. Learn what data we access and how we protect your privacy.",
+    "Privacy policy for the WriteScore Chrome Extension. Learn what data we access and how we protect your privacy.",
 };
 
 export default function ExtensionPrivacyPage() {
@@ -16,7 +16,7 @@ export default function ExtensionPrivacyPage() {
         <div className="container mx-auto flex h-14 items-center justify-between px-4">
           <Link href="/" className="flex items-center gap-2">
             <Zap className="h-5 w-5 text-primary" />
-            <span className="font-bold">AgentDesk</span>
+            <span className="font-bold">WriteScore</span>
           </Link>
           <Link href="/">
             <Button variant="ghost" size="sm" className="gap-1.5">
@@ -38,7 +38,7 @@ export default function ExtensionPrivacyPage() {
           <section>
             <h2 className="text-xl font-semibold mb-2">Overview</h2>
             <p className="text-muted-foreground leading-relaxed">
-              The AgentDesk Chrome Extension (&ldquo;Extension&rdquo;) helps you
+              The WriteScore Chrome Extension (&ldquo;Extension&rdquo;) helps you
               analyze your writing directly in Gmail, LinkedIn, and Google Docs.
               This privacy policy explains what data the Extension accesses, how
               it&apos;s used, and your rights.
@@ -52,13 +52,13 @@ export default function ExtensionPrivacyPage() {
             <ul className="list-disc pl-5 text-muted-foreground space-y-2">
               <li>
                 <strong>Selected text only:</strong> When you right-click and
-                choose &ldquo;Analyze with AgentDesk&rdquo; or click the Score
+                choose &ldquo;Analyze with WriteScore&rdquo; or click the Score
                 button, only the text you explicitly select or have in a compose
                 window is sent for analysis. We never read or scan page content
                 without your action.
               </li>
               <li>
-                <strong>Authentication tokens:</strong> Your AgentDesk session
+                <strong>Authentication tokens:</strong> Your WriteScore session
                 token is stored locally in the browser (via{" "}
                 <code>chrome.storage.local</code>) to keep you signed in. It is
                 never shared with third parties.
@@ -90,7 +90,7 @@ export default function ExtensionPrivacyPage() {
             </h2>
             <p className="text-muted-foreground leading-relaxed">
               When you submit text for analysis, it is sent securely (HTTPS) to
-              the AgentDesk API, processed by our AI (powered by xAI Grok), and
+              the WriteScore API, processed by our AI (powered by xAI Grok), and
               the result is returned to the Extension. Your text is stored in your
               personal analysis history (accessible only to you) and is never
               used to train AI models.
@@ -115,12 +115,12 @@ export default function ExtensionPrivacyPage() {
                 of selected text in Google Docs
               </li>
               <li>
-                <strong>agentdesk.app:</strong> To securely sync your login
+                <strong>writescore.io:</strong> To securely sync your login
                 session between the web app and extension
               </li>
               <li>
                 <strong>contextMenus:</strong> To show the &ldquo;Analyze with
-                AgentDesk&rdquo; option when you right-click selected text
+                WriteScore&rdquo; option when you right-click selected text
               </li>
               <li>
                 <strong>storage:</strong> To store your session token and
@@ -142,7 +142,7 @@ export default function ExtensionPrivacyPage() {
               free, unlimited for paid plans). You can delete any analysis from
               your dashboard at any time. Uninstalling the extension removes all
               locally stored data. To delete your account and all associated
-              data, contact support@agentdesk.app.
+              data, contact support@writescore.io.
             </p>
           </section>
 
@@ -150,8 +150,8 @@ export default function ExtensionPrivacyPage() {
             <h2 className="text-xl font-semibold mb-2">Contact</h2>
             <p className="text-muted-foreground leading-relaxed">
               Questions about this policy? Email us at{" "}
-              <a href="mailto:privacy@agentdesk.app" className="text-primary hover:underline">
-                privacy@agentdesk.app
+              <a href="mailto:privacy@writescore.io" className="text-primary hover:underline">
+                privacy@writescore.io
               </a>
             </p>
           </section>

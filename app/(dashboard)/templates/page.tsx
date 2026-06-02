@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { TemplateMarketplace } from "@/components/templates/template-marketplace";
 
 export const metadata: Metadata = {
-  title: "Templates — AgentDesk",
+  title: "Templates — WriteScore",
   description: "Browse high-scoring templates from the community. Use, fork, and customize.",
 };
 

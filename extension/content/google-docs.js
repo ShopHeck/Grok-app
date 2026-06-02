@@ -1,5 +1,5 @@
 /**
- * AgentDesk Content Script - Google Docs
+ * WriteScore Content Script - Google Docs
  * Listens for right-click analysis from context menu,
  * displays results in floating badge
  */

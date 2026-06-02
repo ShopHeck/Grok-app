@@ -64,7 +64,7 @@ export async function GET(request: NextRequest) {
   <rect x="0" y="0" width="1200" height="4" fill="#6366f1"/>
 
   <!-- Logo area -->
-  <text x="60" y="60" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="24" font-weight="700" fill="#6366f1">⚡ AgentDesk</text>
+  <text x="60" y="60" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="24" font-weight="700" fill="#6366f1">⚡ WriteScore</text>
 
   <!-- Main card -->
   <rect x="60" y="100" width="1080" height="440" rx="16" fill="white" stroke="#e2e8f0" stroke-width="1"/>
@@ -85,10 +85,10 @@ export async function GET(request: NextRequest) {
   <text x="480" y="430" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="16" font-weight="600" fill="white" text-anchor="middle">Try it free →</text>
 
   <!-- Score label -->
-  <text x="360" y="480" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" fill="#9ca3af">Scored with AI • agentdesk.app</text>
+  <text x="360" y="480" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" fill="#9ca3af">Scored with AI • writescore.io</text>
 
   <!-- Bottom branding -->
-  <text x="1100" y="600" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" fill="#9ca3af" text-anchor="end">agentdesk.app</text>
+  <text x="1100" y="600" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" fill="#9ca3af" text-anchor="end">writescore.io</text>
 </svg>`;
 
   return new NextResponse(svg, {

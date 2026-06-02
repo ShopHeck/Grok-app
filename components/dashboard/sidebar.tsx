@@ -36,7 +36,7 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
           onClick={onNavigate}
         >
           <Zap className="h-6 w-6 text-primary" />
-          <span className="text-lg font-bold">AgentDesk</span>
+          <span className="text-lg font-bold">WriteScore</span>
         </Link>
         <p className="text-xs text-muted-foreground mt-1">
           AI Toolkit for Business

@@ -6,7 +6,7 @@ import OpenAI from "openai";
 
 /**
  * POST /api/integrations/slack
- * Handles Slack slash command: /agentdesk score <text>
+ * Handles Slack slash command: /writescore score <text>
  * Also handles Slack URL verification challenge.
  */
 
@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
   if (!text || text.trim().length === 0) {
     return NextResponse.json({
       response_type: "ephemeral",
-      text: "Usage: `/agentdesk [agent] <your text>`\n\nAvailable agents: `email`, `social`, `newsletter`, `support`, `ad`, `listing`\n\nExample: `/agentdesk email Hi Sarah, I noticed your team just...`",
+      text: "Usage: `/writescore [agent] <your text>`\n\nAvailable agents: `email`, `social`, `newsletter`, `support`, `ad`, `listing`\n\nExample: `/writescore email Hi Sarah, I noticed your team just...`",
     });
   }
 
@@ -106,7 +106,7 @@ async function processSlackAnalysis(
   slackUserId: string
 ) {
   try {
-    // Look up connected AgentDesk user via Slack team/user
+    // Look up connected WriteScore user via Slack team/user
     const supabase = createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.SUPABASE_SERVICE_ROLE_KEY!
@@ -134,7 +134,7 @@ async function processSlackAnalysis(
     if (!canAccessAgent(plan, agentId)) {
       await postToSlack(responseUrl, {
         response_type: "ephemeral",
-        text: `🔒 The ${getAgent(agentId).name} agent requires a Pro plan. Upgrade at agentdesk.app/settings`,
+        text: `🔒 The ${getAgent(agentId).name} agent requires a Pro plan. Upgrade at writescore.io/settings`,
       });
       return;
     }
@@ -232,7 +232,7 @@ async function processSlackAnalysis(
   } catch (error) {
     await postToSlack(responseUrl, {
       response_type: "ephemeral",
-      text: `❌ Analysis failed: ${error instanceof Error ? error.message : "Unknown error"}. Try again or visit agentdesk.app`,
+      text: `❌ Analysis failed: ${error instanceof Error ? error.message : "Unknown error"}. Try again or visit writescore.io`,
     });
   }
 }

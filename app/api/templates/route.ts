@@ -72,7 +72,7 @@ export async function GET(request: NextRequest) {
   return NextResponse.json({
     templates: (templates || []).map((t) => ({
       ...t,
-      author_name: t.is_official ? "AgentDesk" : "Community",
+      author_name: t.is_official ? "WriteScore" : "Community",
     })),
     pagination: {
       page,

@@ -1,5 +1,5 @@
 /**
- * AgentDesk Extension Background Service Worker
+ * WriteScore Extension Background Service Worker
  * Handles: context menus, API communication, auth state, alarms
  */
 
@@ -21,7 +21,7 @@ chrome.runtime.onInstalled.addListener((details) => {
 
   chrome.contextMenus.create({
     id: "agentdesk-analyze",
-    title: "Analyze with AgentDesk",
+    title: "Analyze with WriteScore",
     contexts: ["selection"],
   });
 

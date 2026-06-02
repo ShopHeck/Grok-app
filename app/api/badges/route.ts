@@ -10,7 +10,7 @@ import { createClient } from "@supabase/supabase-js";
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const score = parseInt(searchParams.get("score") || "0", 10);
-  const agent = searchParams.get("agent") || "AgentDesk";
+  const agent = searchParams.get("agent") || "WriteScore";
   const theme = searchParams.get("theme") || "light";
   const shareId = searchParams.get("id"); // optional: verify against real analysis
 
@@ -56,7 +56,7 @@ export async function GET(request: NextRequest) {
   <rect x="1" y="1" width="50" height="30" rx="5" fill="${colors.bg}"/>
   <text x="26" y="20" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" font-weight="700" fill="${colors.text}" text-anchor="middle">${validScore}</text>
   <text x="60" y="14" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9" font-weight="600" fill="${textColor}">${agentLabel}</text>
-  <text x="60" y="24" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="8" fill="${isDark ? "#9ca3af" : "#6b7280"}">Scored by AgentDesk</text>
+  <text x="60" y="24" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="8" fill="${isDark ? "#9ca3af" : "#6b7280"}">Scored by WriteScore</text>
 </svg>`;
 
   return new NextResponse(svg, {

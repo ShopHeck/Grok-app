@@ -1,9 +1,9 @@
 /**
- * AgentDesk Auth Bridge Content Script
- * Injected on agentdesk.app/* to pass the Supabase session to the extension.
+ * WriteScore Auth Bridge Content Script
+ * Injected on writescore.io/* to pass the Supabase session to the extension.
  *
  * Flow:
- * 1. User signs in on agentdesk.app (web app)
+ * 1. User signs in on writescore.io (web app)
  * 2. This content script detects the session in localStorage/cookies
  * 3. Sends SET_SESSION message to the background service worker
  * 4. Extension is now authenticated without a separate OAuth flow
@@ -128,7 +128,7 @@
 
   // Listen for session change messages sent from the page itself
   window.addEventListener("message", (e) => {
-    if (e.data && e.data.type === "AGENTDESK_SESSION_CHANGED") {
+    if (e.data && e.data.type === "WRITESCORE_SESSION_CHANGED") {
       checkSession();
     }
   });

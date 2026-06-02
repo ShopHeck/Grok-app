@@ -1,5 +1,5 @@
 /**
- * AgentDesk Content Script - LinkedIn
+ * WriteScore Content Script - LinkedIn
  * Auto-detects post composer, suggests Social Post Optimizer,
  * shows floating score badge after analysis
  */

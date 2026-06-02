@@ -24,7 +24,7 @@ export interface MarketplaceAgent {
   revenue_share_pct: number;
   /** Public marketplace listing */
   is_published: boolean;
-  /** Approved by AgentDesk team */
+  /** Approved by WriteScore team */
   is_approved: boolean;
   /** Featured on homepage */
   is_featured: boolean;

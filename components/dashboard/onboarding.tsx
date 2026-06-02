@@ -48,7 +48,7 @@ export function Onboarding({ userName, hasAnalyses }: OnboardingProps) {
               </Badge>
             </div>
             <h2 className="text-xl font-bold mb-1">
-              Welcome to AgentDesk, {firstName}! 👋
+              Welcome to WriteScore, {firstName}! 👋
             </h2>
             <p className="text-sm text-muted-foreground mb-4">
               Get expert AI analysis in 3 easy steps:

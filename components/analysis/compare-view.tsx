@@ -138,7 +138,7 @@ export function CompareView(props: CompareViewProps) {
   const diff = showDiff ? computeWordDiff(left.inputText, right.inputText) : null;
 
   async function handleShare() {
-    const shareText = `${agent?.icon || "🤖"} ${title}\nScore: ${left.score} → ${right.score} (+${scoreDelta})\n\nImproved with AgentDesk (agentdesk.app)`;
+    const shareText = `${agent?.icon || "🤖"} ${title}\nScore: ${left.score} → ${right.score} (+${scoreDelta})\n\nImproved with WriteScore (writescore.io)`;
     await navigator.clipboard.writeText(shareText);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

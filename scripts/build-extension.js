@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * AgentDesk Chrome Extension Build Script
+ * WriteScore Chrome Extension Build Script
  *
  * Builds the extension for different environments by:
  * 1. Copying all extension files to dist/extension/
@@ -14,12 +14,12 @@
  *
  * Environments:
  *   development  — http://localhost:3000
- *   staging      — https://staging.agentdesk.app
- *   production   — https://agentdesk.app (default)
+ *   staging      — https://staging.writescore.io
+ *   production   — https://writescore.io (default)
  *
  * Output:
  *   dist/extension/          — unpacked extension (for local testing)
- *   dist/agentdesk-ext-v{VERSION}-{ENV}.zip — packaged for store upload
+ *   dist/writescore-ext-v{VERSION}-{ENV}.zip — packaged for store upload
  */
 
 const fs = require("fs");
@@ -35,8 +35,8 @@ const ENV_CONFIGS = {
     ENV: "development",
   },
   staging: {
-    API_BASE: "https://staging.agentdesk.app",
-    APP_URL: "https://staging.agentdesk.app",
+    API_BASE: "https://staging.writescore.io",
+    APP_URL: "https://staging.writescore.io",
     ENV: "staging",
   },
   production: {
@@ -66,7 +66,7 @@ function main() {
   );
   const version = packageJson.version || "1.0.0";
 
-  console.log(`\n⚡ Building AgentDesk Extension`);
+  console.log(`\n⚡ Building WriteScore Extension`);
   console.log(`   Environment: ${env}`);
   console.log(`   API Base:    ${config.API_BASE}`);
   console.log(`   Version:     ${version}\n`);
@@ -88,7 +88,7 @@ function main() {
  */
 
 // eslint-disable-next-line no-unused-vars
-const AGENTDESK_CONFIG = {
+const WRITESCORE_CONFIG = {
   API_BASE: "${config.API_BASE}",
   APP_URL: "${config.APP_URL}",
   EXTENSION_ID: "",
@@ -112,7 +112,7 @@ const AGENTDESK_CONFIG = {
       // Replace the hardcoded API_BASE constant
       content = content.replace(
         /const API_BASE = ["'][^"']+["'];?/g,
-        `const API_BASE = AGENTDESK_CONFIG?.API_BASE || "${config.API_BASE}";`
+        `const API_BASE = WRITESCORE_CONFIG?.API_BASE || "${config.API_BASE}";`
       );
       fs.writeFileSync(filePath, content);
     }
@@ -137,7 +137,7 @@ const AGENTDESK_CONFIG = {
     // Add localhost support to content_scripts matches
     if (manifest.content_scripts) {
       for (const script of manifest.content_scripts) {
-        if (script.matches.includes("https://agentdesk.app/*")) {
+        if (script.matches.includes("https://writescore.io/*")) {
           if (!script.matches.includes("http://localhost:3000/*")) {
             script.matches.push("http://localhost:3000/*");
           }
@@ -151,7 +151,7 @@ const AGENTDESK_CONFIG = {
     // Add localhost support to web_accessible_resources matches
     if (manifest.web_accessible_resources) {
       for (const res of manifest.web_accessible_resources) {
-        if (res.matches && res.matches.includes("https://agentdesk.app/*")) {
+        if (res.matches && res.matches.includes("https://writescore.io/*")) {
           if (!res.matches.includes("http://localhost:3000/*")) {
             res.matches.push("http://localhost:3000/*");
           }
@@ -209,7 +209,7 @@ const AGENTDESK_CONFIG = {
   console.log("   ✓ Validated required files");
 
   // Step 7: Create ZIP for Chrome Web Store
-  const zipName = `agentdesk-ext-v${version}-${env}.zip`;
+  const zipName = `writescore-ext-v${version}-${env}.zip`;
   const zipPath = path.resolve(__dirname, "../dist", zipName);
 
   try {
