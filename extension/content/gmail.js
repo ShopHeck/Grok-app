@@ -1,5 +1,5 @@
 /**
- * AgentDesk Content Script - Gmail
+ * WriteScore Content Script - Gmail
  * Auto-detects compose window, suggests Cold Email Grader,
  * shows floating score badge after analysis
  */
@@ -49,7 +49,7 @@
   }
 
   function attachComposeHelper(composeEl) {
-    // Add a subtle "Score with AgentDesk" button near compose toolbar
+    // Add a subtle "Score with WriteScore" button near compose toolbar
     const toolbar = composeEl.closest(".iN")?.querySelector(".btC");
     if (!toolbar || toolbar.querySelector(".agentdesk-compose-btn")) return;
 
@@ -104,7 +104,7 @@
     el.id = "agentdesk-badge";
     el.innerHTML = `
       <div class="spinner"></div>
-      <span>Analyzing with AgentDesk...</span>
+      <span>Analyzing with WriteScore...</span>
     `;
     document.body.appendChild(el);
     currentBadge = el;

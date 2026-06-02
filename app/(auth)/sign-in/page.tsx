@@ -59,7 +59,7 @@ export default function SignInPage() {
           <Zap className="h-8 w-8 text-primary" />
         </div>
         <CardTitle>Welcome back</CardTitle>
-        <CardDescription>Sign in to your AgentDesk account</CardDescription>
+        <CardDescription>Sign in to your WriteScore account</CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSignIn} className="flex flex-col gap-4">

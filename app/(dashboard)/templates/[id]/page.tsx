@@ -43,7 +43,7 @@ export async function generateMetadata({
 
   const agent = agentMap[template.agent_id];
   return {
-    title: `${template.title} — ${agent?.name || "Template"} | AgentDesk`,
+    title: `${template.title} — ${agent?.name || "Template"} | WriteScore`,
     description: template.description,
   };
 }
@@ -69,7 +69,7 @@ export default async function TemplateDetailPage({
   if (!template) notFound();
 
   const agent = agentMap[template.agent_id];
-  const authorName = template.is_official ? "AgentDesk" : "Community";
+  const authorName = template.is_official ? "WriteScore" : "Community";
 
   return (
     <div className="flex flex-col gap-6 max-w-4xl mx-auto">

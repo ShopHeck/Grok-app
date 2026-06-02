@@ -40,7 +40,7 @@ export async function GET(
   return NextResponse.json({
     template: {
       ...template,
-      author_name: template.is_official ? "AgentDesk" : "Community",
+      author_name: template.is_official ? "WriteScore" : "Community",
     },
   });
 }

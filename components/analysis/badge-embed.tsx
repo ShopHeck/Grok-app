@@ -26,13 +26,13 @@ export function BadgeEmbed({ score, agentId, shareId }: BadgeEmbedProps) {
   const [theme, setTheme] = useState<"light" | "dark">("light");
   const [copied, setCopied] = useState(false);
 
-  const baseUrl = typeof window !== "undefined" ? window.location.origin : "https://agentdesk.app";
+  const baseUrl = typeof window !== "undefined" ? window.location.origin : "https://writescore.io";
   const badgeUrl = `${baseUrl}/api/badges?score=${score}&agent=${agentId}&theme=${theme}${shareId ? `&id=${shareId}` : ""}`;
   const shareLink = shareId ? `${baseUrl}/share/${shareId}` : `${baseUrl}`;
 
   const embedCodes: Record<EmbedFormat, string> = {
-    markdown: `[![AgentDesk Score](${badgeUrl})](${shareLink})`,
-    html: `<a href="${shareLink}"><img src="${badgeUrl}" alt="AgentDesk Score: ${score}/100" /></a>`,
+    markdown: `[![WriteScore](${badgeUrl})](${shareLink})`,
+    html: `<a href="${shareLink}"><img src="${badgeUrl}" alt="WriteScore: ${score}/100" /></a>`,
     url: badgeUrl,
   };
 

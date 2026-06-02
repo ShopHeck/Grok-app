@@ -7,7 +7,7 @@ Place the following icon files here before publishing to Chrome Web Store:
 - `icon-48.png` (48x48px)
 - `icon-128.png` (128x128px)
 
-These should be the AgentDesk lightning bolt logo on a transparent or branded background.
+These should be the WriteScore lightning bolt logo on a transparent or branded background.
 
 ## Design Specs
 

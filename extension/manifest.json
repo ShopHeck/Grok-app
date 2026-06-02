@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "AgentDesk - AI Writing Analyzer",
+  "name": "WriteScore - AI Writing Analyzer",
   "version": "1.0.0",
   "description": "Score your writing instantly with AI. Right-click any text to analyze cold emails, LinkedIn posts, ad copy, and more.",
   "permissions": [

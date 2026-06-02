@@ -27,13 +27,13 @@ export function ExtensionSync() {
         };
 
         // Write to localStorage under a key ending in '-auth-token' so auth-bridge.js finds it
-        localStorage.setItem("sb-agentdesk-auth-token", JSON.stringify(sessionData));
+        localStorage.setItem("sb-writescore-auth-token", JSON.stringify(sessionData));
       } else {
-        localStorage.removeItem("sb-agentdesk-auth-token");
+        localStorage.removeItem("sb-writescore-auth-token");
       }
 
       // Notify the content script (auth-bridge.js) immediately
-      window.postMessage({ type: "AGENTDESK_SESSION_CHANGED" }, "*");
+      window.postMessage({ type: "WRITESCORE_SESSION_CHANGED" }, "*");
     });
 
     return () => {

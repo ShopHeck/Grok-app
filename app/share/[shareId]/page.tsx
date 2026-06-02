@@ -47,21 +47,21 @@ export async function generateMetadata({
     openGraph: {
       title: `${agent?.icon || "🤖"} ${analysis.title} — Score: ${analysis.score}/100`,
       description:
-        analysis.summary || `AI analysis result from AgentDesk`,
+        analysis.summary || `AI analysis result from WriteScore`,
       type: "article",
       images: [
         {
           url: `/api/badges/og?id=${shareId}`,
           width: 1200,
           height: 630,
-          alt: `AgentDesk Score: ${analysis.score}/100`,
+          alt: `WriteScore: ${analysis.score}/100`,
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
       title: `${agent?.icon || "🤖"} ${analysis.title} — Score: ${analysis.score}/100`,
-      description: analysis.summary || `AI analysis result from AgentDesk`,
+      description: analysis.summary || `AI analysis result from WriteScore`,
       images: [`/api/badges/og?id=${shareId}`],
     },
   };
@@ -93,7 +93,7 @@ export default async function SharedAnalysisPage({
         <div className="container mx-auto flex h-14 items-center justify-between px-4">
           <Link href="/" className="flex items-center gap-2">
             <Zap className="h-5 w-5 text-primary" />
-            <span className="font-bold">AgentDesk</span>
+            <span className="font-bold">WriteScore</span>
           </Link>
           <div className="flex items-center gap-3">
             <Badge variant="secondary" className="text-xs">
@@ -135,7 +135,7 @@ export default async function SharedAnalysisPage({
               Want to run your own analysis?
             </p>
             <p className="text-sm text-muted-foreground mb-4">
-              AgentDesk has 5+ AI agents for business writing. Start free.
+              WriteScore has 5+ AI agents for business writing. Start free.
             </p>
             <Link href="/sign-up">
               <Button>Get Started Free</Button>

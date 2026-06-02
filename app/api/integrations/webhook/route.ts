@@ -73,7 +73,7 @@ export async function POST(request: NextRequest) {
   // Only team plan gets API access
   if (plan !== "team") {
     return NextResponse.json(
-      { error: "API access requires a Team plan. Upgrade at agentdesk.app/settings" },
+      { error: "API access requires a Team plan. Upgrade at writescore.io/settings" },
       { status: 403 }
     );
   }
@@ -195,7 +195,7 @@ export async function POST(request: NextRequest) {
  */
 export async function GET() {
   return NextResponse.json({
-    name: "AgentDesk Webhook API",
+    name: "WriteScore Webhook API",
     version: "1.0",
     description: "Analyze text with AI agents via API. Team plan required.",
     endpoint: "POST /api/integrations/webhook",

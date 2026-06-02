@@ -94,7 +94,7 @@ export function IntegrationsSettings() {
             Slack Integration
           </CardTitle>
           <CardDescription>
-            Use <code className="text-xs bg-muted px-1 rounded">/agentdesk</code> to score text in any channel
+            Use <code className="text-xs bg-muted px-1 rounded">/writescore</code> to score text in any channel
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -126,7 +126,7 @@ export function IntegrationsSettings() {
             Webhook API (Zapier / Make)
           </CardTitle>
           <CardDescription>
-            Connect AgentDesk to 5000+ apps via API keys
+            Connect WriteScore to 5000+ apps via API keys
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">

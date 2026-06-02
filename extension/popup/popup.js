@@ -1,5 +1,5 @@
 /**
- * AgentDesk Extension Popup
+ * WriteScore Extension Popup
  * Handles login state, quick analysis, and recent results display
  */
 

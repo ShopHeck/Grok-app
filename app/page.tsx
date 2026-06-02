@@ -35,7 +35,7 @@ export default function HomePage() {
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
           <div className="flex items-center gap-2">
             <Zap className="h-6 w-6 text-primary" />
-            <span className="text-xl font-bold">AgentDesk</span>
+            <span className="text-xl font-bold">WriteScore</span>
           </div>
           <nav className="flex items-center gap-4">
             <Link href="#agents" className="text-sm text-muted-foreground hover:text-foreground hidden sm:block">
@@ -375,7 +375,7 @@ export default function HomePage() {
                   </div>
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  Score text directly in Slack with <code className="text-xs bg-muted px-1 rounded">/agentdesk</code>.
+                  Score text directly in Slack with <code className="text-xs bg-muted px-1 rounded">/writescore</code>.
                   Connect Zapier, Make, or your own tools with our REST API
                   and webhook callbacks.
                 </p>
@@ -556,7 +556,7 @@ export default function HomePage() {
                   </div>
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  Build on top of AgentDesk. Score content in your CRM, grade
+                  Build on top of WriteScore. Score content in your CRM, grade
                   templates before sending, or add AI analysis to any product.
                   RESTful API with SDKs for Node.js and Python.
                 </p>
@@ -631,7 +631,7 @@ export default function HomePage() {
               Ready to level up your business writing?
             </h2>
             <p className="text-muted-foreground mb-8">
-              Join professionals who use AgentDesk to write better emails,
+              Join professionals who use WriteScore to write better emails,
               newsletters, proposals, and contracts. Start for free on web or install
               the Chrome extension.
             </p>
@@ -653,10 +653,10 @@ export default function HomePage() {
         <div className="container mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <Zap className="h-4 w-4 text-primary" />
-            <span className="font-semibold">AgentDesk</span>
+            <span className="font-semibold">WriteScore</span>
           </div>
           <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} AgentDesk. Powered by xAI Grok.
+            &copy; {new Date().getFullYear()} WriteScore. Powered by xAI Grok.
           </p>
         </div>
       </footer>

@@ -33,7 +33,7 @@ export function ShareScorePrompt({
   // Only show for high scores
   if (score < 85 || dismissed) return null;
 
-  const shareText = `${agentIcon} Just scored ${score}/100 on my ${agentName.toLowerCase()} with AgentDesk! AI-powered writing analysis is a game changer.`;
+  const shareText = `${agentIcon} Just scored ${score}/100 on my ${agentName.toLowerCase()} with WriteScore! AI-powered writing analysis is a game changer.`;
   const url = shareUrl || `${typeof window !== "undefined" ? window.location.origin : ""}/share/${analysisId}`;
 
   async function handleCreateShare() {

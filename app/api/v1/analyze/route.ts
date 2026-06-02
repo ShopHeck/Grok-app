@@ -27,11 +27,11 @@ const AnalyzeSchema = z.object({
 
 export async function GET() {
   return NextResponse.json({
-    name: "AgentDesk Public API",
+    name: "WriteScore Public API",
     version: "1.0.0",
     description: "AI-powered text analysis across 15+ specialized agents",
-    baseUrl: "https://agentdesk.app/api/v1",
-    authentication: "Bearer token. Get your API key at agentdesk.app/settings",
+    baseUrl: "https://writescore.io/api/v1",
+    authentication: "Bearer token. Get your API key at writescore.io/settings",
     endpoints: {
       "POST /v1/analyze": {
         description: "Analyze text with any agent",
@@ -66,8 +66,8 @@ export async function GET() {
     },
     rateLimits: { perMinute: 30, perDay: 1000 },
     sdks: {
-      node: "npm install @agentdesk/sdk (coming soon)",
-      python: "pip install agentdesk (coming soon)",
+      node: "npm install @writescore/sdk (coming soon)",
+      python: "pip install writescore (coming soon)",
     },
   });
 }
@@ -80,7 +80,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       error: "authentication_required",
       message: "Include your API key: Authorization: Bearer <api_key>",
-      docs: "https://agentdesk.app/api/v1/analyze",
+      docs: "https://writescore.io/api/v1/analyze",
     }, { status: 401 });
   }
 

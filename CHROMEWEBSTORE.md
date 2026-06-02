@@ -1,19 +1,19 @@
-# Chrome Web Store Listing — AgentDesk - AI Writing Analyzer
+# Chrome Web Store Listing — WriteScore - AI Writing Analyzer
 
-> Last Updated: 2026-05-30
+> Last Updated: 2026-06-02
 
 ## Store Listing
 
 **Extension Name**
-AgentDesk - AI Writing Analyzer
+WriteScore - AI Writing Analyzer
 
 **Short Description**
 Score your writing instantly with AI. Right-click any text to analyze cold emails, LinkedIn posts, ad copy, and more.
 
 **Detailed Description**
-AgentDesk is your personal AI-powered writing coach that runs directly in your browser. Get instant clarity, engagement, and effectiveness scores on any text you write before you hit send.
+WriteScore is your personal AI-powered writing coach that runs directly in your browser. Get instant clarity, engagement, and effectiveness scores on any text you write before you hit send.
 
-Whether you are crafting cold emails on Gmail, writing posts on LinkedIn, or drafting documents in Google Docs, AgentDesk analyzes your writing and provides actionable suggestions to improve your copy's impact.
+Whether you are crafting cold emails on Gmail, writing posts on LinkedIn, or drafting documents in Google Docs, WriteScore analyzes your writing and provides actionable suggestions to improve your copy's impact.
 
 Key Features:
 - Instant scoring (0-100) based on engagement, clarity, and style guidelines
@@ -25,15 +25,15 @@ Key Features:
 
 How to use it:
 1. Pin the extension to your toolbar and sign in.
-2. Select any text on a web page, right-click, and choose "Analyze with AgentDesk".
+2. Select any text on a web page, right-click, and choose "Analyze with WriteScore".
 3. Or, click the Gmail "Score Email" or LinkedIn "Score Post" buttons directly in your composer.
 4. Review your grade, copy the optimized rewrite, and improve your metrics!
 
 Privacy and Permissions:
-AgentDesk takes privacy seriously. We only transmit the specific text you select for analysis to our secure grading API. We never track your browsing history or sell your data.
+WriteScore takes privacy seriously. We only transmit the specific text you select for analysis to our secure grading API. We never track your browsing history or sell your data.
 
 Support and Feedback:
-Have questions or suggestions? Reach out to support@agentdesk.app or visit writescore.io/support.
+Have questions or suggestions? Reach out to support@writescore.io or visit writescore.io/support.
 
 **Category**
 Productivity
@@ -48,17 +48,17 @@ English
 
 | Asset | Dimensions | Status | Filename |
 |-------|-----------|--------|----------|
-| Store Icon [REQUIRED] | 128×128 PNG | ✅ Ready | `extension/assets/icon-128.png` |
-| Screenshot 1 [REQUIRED] | 1280×800 or 640×400 | ⬜ Not created | |
-| Screenshot 2 [RECOMMENDED] | 1280×800 or 640×400 | ⬜ Not created | |
-| Screenshot 3 [RECOMMENDED] | 1280×800 or 640×400 | ⬜ Not created | |
-| Small Promo Tile [RECOMMENDED] | 440×280 | ⬜ Not created | |
-| Marquee Promo Tile | 1400×560 | ⬜ Not created | |
+| Store Icon [REQUIRED] | 128x128 PNG | Ready | `extension/assets/icon-128.png` |
+| Screenshot 1 [REQUIRED] | 1280x800 or 640x400 | Not created | |
+| Screenshot 2 [RECOMMENDED] | 1280x800 or 640x400 | Not created | |
+| Screenshot 3 [RECOMMENDED] | 1280x800 or 640x400 | Not created | |
+| Small Promo Tile [RECOMMENDED] | 440x280 | Not created | |
+| Marquee Promo Tile | 1400x560 | Not created | |
 
 ### Screenshot Notes
 - **Screenshot 1**: Extension popup interface showing an email grade score, summary, engagement suggestions, and the "Copy Rewrite" button.
 - **Screenshot 2**: Gmail compose window with the inline "Score Email" button and the floating score badge overlay demonstrating the integration.
-- **Screenshot 3**: Right-click context menu active over a LinkedIn post selection, highlighting the "Analyze with AgentDesk -> Score as Social Post" options.
+- **Screenshot 3**: Right-click context menu active over a LinkedIn post selection, highlighting the "Analyze with WriteScore -> Score as Social Post" options.
 
 ## Permissions Justification
 
@@ -67,7 +67,7 @@ English
 | `activeTab` | permissions | Used to temporarily access the active page content when the user explicitly triggers an analysis from the context menu. |
 | `contextMenus` | permissions | Used to add analysis options to the right-click menu, allowing quick selection-based grading. |
 | `storage` | permissions | Used to persist the Supabase authentication session, usage quotas, streak metrics, and recent analysis history locally. |
-| `alarms` | permissions | Used to run a background alarm once per hour to sync and update usage statistics with the AgentDesk server. |
+| `alarms` | permissions | Used to run a background alarm once per hour to sync and update usage statistics with the WriteScore server. |
 | `https://mail.google.com/*` | host_permissions | Required to inject the content script that adds the helper button to the Gmail compose toolbar. |
 | `https://www.linkedin.com/*` | host_permissions | Required to inject the content script that adds the helper button to the LinkedIn sharing box. |
 | `https://docs.google.com/*` | host_permissions | Required to run content scripts that handle context-menu selections and draw result overlays on Google Docs. |
@@ -104,13 +104,13 @@ https://writescore.io/privacy
 ## Developer Info
 
 **Publisher Name**
-AgentDesk LLC
+WriteScore LLC
 
 **Contact Email**
-developer@agentdesk.app
+developer@writescore.io
 
 **Support URL / Email**
-support@agentdesk.app
+support@writescore.io
 
 **Homepage URL**
 https://writescore.io

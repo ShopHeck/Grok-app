@@ -4,8 +4,8 @@ import { ExtensionSync } from "@/components/extension-sync";
 
 export const metadata: Metadata = {
   title: {
-    default: "AgentDesk — AI Toolkit for Business Writing",
-    template: "%s | AgentDesk",
+    default: "WriteScore — AI Toolkit for Business Writing",
+    template: "%s | WriteScore",
   },
   description:
     "Specialized AI agents that grade cold emails, optimize product listings, review contracts, and analyze job posts. Get structured scores, actionable feedback, and AI rewrites in seconds.",
@@ -17,18 +17,18 @@ export const metadata: Metadata = {
     "job post analyzer",
     "AI agents",
     "business writing",
-    "Grok AI",
+    "writing score",
   ],
-  authors: [{ name: "AgentDesk" }],
-  creator: "AgentDesk",
+  authors: [{ name: "WriteScore" }],
+  creator: "WriteScore",
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_APP_URL || "https://agentdesk.ai"
+    process.env.NEXT_PUBLIC_APP_URL || "https://writescore.io"
   ),
   openGraph: {
     type: "website",
     locale: "en_US",
-    siteName: "AgentDesk",
-    title: "AgentDesk — AI Toolkit for Business Writing",
+    siteName: "WriteScore",
+    title: "WriteScore — AI Toolkit for Business Writing",
     description:
       "One platform, multiple AI experts. Grade emails, optimize listings, review contracts, and analyze job posts with structured scores and AI rewrites.",
     images: [
@@ -36,13 +36,13 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "AgentDesk — Specialized AI Agents for Every Business Task",
+        alt: "WriteScore — Specialized AI Agents for Every Business Task",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "AgentDesk — AI Toolkit for Business Writing",
+    title: "WriteScore — AI Toolkit for Business Writing",
     description:
       "Specialized AI agents that score and rewrite your business writing. Try free.",
     images: ["/og-image.png"],

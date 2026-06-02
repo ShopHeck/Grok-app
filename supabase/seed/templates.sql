@@ -3,7 +3,7 @@
 -- with the actual admin/system user ID after first deployment.
 -- Run: UPDATE templates SET author_id = 'YOUR_ADMIN_USER_ID' WHERE is_official = true;
 
--- Use a placeholder UUID for the official "AgentDesk" system author
+-- Use a placeholder UUID for the official "WriteScore" system author
 -- Replace after deploying with actual admin user UUID
 DO $$
 DECLARE
