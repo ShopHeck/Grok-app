@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { ExtensionSync } from "@/components/extension-sync";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   title: {
@@ -85,6 +86,7 @@ export default function RootLayout({
       <body className="font-sans antialiased">
         <ExtensionSync />
         {children}
+        <Analytics />
       </body>
     </html>
   );
