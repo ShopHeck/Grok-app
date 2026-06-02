@@ -26,6 +26,7 @@ import {
   Trophy,
 } from "lucide-react";
 import { PricingToggle } from "@/components/pricing-toggle";
+import { DemoVideo } from "@/components/home/demo-video";
 
 export default function HomePage() {
   return (
@@ -88,6 +89,26 @@ export default function HomePage() {
             <p className="text-sm text-muted-foreground mt-4">
               No credit card required &middot; 10 free analyses per month &middot; Chrome extension included
             </p>
+          </div>
+        </section>
+
+        {/* Demo Video */}
+        <section className="py-20 px-4">
+          <div className="container mx-auto max-w-4xl">
+            <div className="text-center mb-10">
+              <Badge className="mb-4" variant="secondary">
+                <Sparkles className="h-3 w-3 mr-1" />
+                See It In Action
+              </Badge>
+              <h2 className="text-3xl font-bold mb-3">
+                From Generic Email to Confirmed Booking
+              </h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                Watch how a cold email scoring 41/100 gets transformed into a
+                personalized, high-converting message — and lands a real meeting.
+              </p>
+            </div>
+            <DemoVideo />
           </div>
         </section>
 
